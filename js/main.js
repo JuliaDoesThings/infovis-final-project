@@ -1,12 +1,13 @@
 import { loadData, loadTempData } from "./load-data";
 import { JSONToHierarchy, CSVToHierarchy } from "./hierarchy.js";
+import { drawTreeMap } from "./treemap.js";
 
 const flatData = loadData();
 //const [root, descendants, leaves] = CSVToHierarchy(flatData);
 
 const testData = loadTempData();
 const [t_root, t_descendants, t_leaves] = CSVToHierarchy(testData);
-
+drawTreeMap(t_root, t_leaves);
 
 
 //const testData = loadJSONData();
