@@ -1,0 +1,81 @@
+.responsive-svg-container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.leaf-label {
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  display: flex;
+}
+
+#legend-families ul {
+  flex-wrap: wrap;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+}
+
+#legend-families li {
+  margin: 5px 10px;
+  display: flex;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+#info-container {
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+}
+
+#instructions, #instructions-treemap {
+  opacity: 1;
+  border: 1px solid #272626;
+  border-radius: 5px;
+  padding: 15px 20px;
+  transition: opacity .2s;
+  overflow: hidden;
+}
+
+#info, #info-treemap {
+  max-height: 200px;
+  opacity: 1;
+  transition: opacity .2s;
+  overflow: hidden;
+}
+
+#info.hidden, #instructions.hidden, #info-treemap.hidden, #instructions-treemap.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+#instructions.hidden, #instructions-treemap.hidden {
+  border-color: #0000;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.info-language {
+  border-bottom: 1px solid #272626;
+  margin-bottom: 6px;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+#info .label, #info-treemap .label {
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=index.d6b7085e.css.map */

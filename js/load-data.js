@@ -17,6 +17,13 @@ export const loadData = () => {
 
 };
 
+export const loadTempData = (data) => {
+    const testData = require("../data/flat_data.csv");
+    console.log("test data", testData)
+
+    return testData;
+}
+
 const formatData = (data) => {
     data.forEach(row => {
         row.enrolled = Number(row.enrolled);
@@ -25,6 +32,8 @@ const formatData = (data) => {
 
     return data;
 }
+
+
 
 /*
 export const loadJSONData = () => {

@@ -1,9 +1,11 @@
-import { loadData, loadJSONData } from "./load-data";
+import { loadData, loadTempData } from "./load-data";
 import { JSONToHierarchy, CSVToHierarchy } from "./hierarchy.js";
 
 const flatData = loadData();
-const [root, descendants, leaves] = CSVToHierarchy(flatData);
+//const [root, descendants, leaves] = CSVToHierarchy(flatData);
 
+const testData = loadTempData();
+const [t_root, t_descendants, t_leaves] = CSVToHierarchy(testData);
 
 
 
