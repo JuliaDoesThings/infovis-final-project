@@ -1,0 +1,136 @@
+{
+    "name": "Programs by Race",
+    "children": [
+        {
+            "name": "Asian/Pacific Islander",
+            "children": [
+                {
+                    "name": "Armed Forces Family",
+                    "enrolled": 346
+                },
+                {
+                    "name": "Structed English Immersion Program or similar",
+                    "enrolled": 1325
+                },
+                {
+                    "name": "Homeless",
+                    "enrolled": 417
+                },
+                {
+                    "name": "Developmental Bilingual Program",
+                    "enrolled": 41
+                },
+                {
+                    "name": "Parents Opted Out of EL Services",
+                    "enrolled": 10
+                },
+                {
+                    "name": "GATE",
+                    "enrolled": 263
+                },
+                {
+                    "name": "TK",
+                    "enrolled": 314
+                }
+            ]
+        },
+        {
+            "name": "American Indian/Alaska Native/Hawaiian",
+            "children": [
+                {
+                    "name": "Armed Forces Family",
+                    "enrolled": 35
+                },
+                {
+                    "name": "Structed English Immersion Program or similar",
+                    "enrolled": 92
+                },
+                {
+                    "name": "Homeless",
+                    "enrolled": 58
+                },
+                {
+                    "name": "Developmental Bilingual Program",
+                    "enrolled": 22
+                },
+                {
+                    "name": "GATE",
+                    "enrolled": 15
+                },
+                {
+                    "name": "TK",
+                    "enrolled": 35
+                }
+            ]
+        },
+        {
+            "name": "White",
+            "children": [
+                {
+                    "name": "TK",
+                    "enrolled": 844
+                },
+                {
+                    "name": "Armed Forces Family",
+                    "enrolled": 551
+                },
+                {
+                    "name": "Structed English Immersion Program or similar",
+                    "enrolled": 2200
+                },
+                {
+                    "name": "Homeless",
+                    "enrolled": 1127
+                },
+                {
+                    "name": "Developmental Bilingual Program",
+                    "enrolled": 705
+                },
+                {
+                    "name": "Parents Opted Out of EL Services",
+                    "enrolled": 29
+                },
+                {
+                    "name": "GATE",
+                    "enrolled": 135
+                },
+                {
+                    "name": "Migrant",
+                    "enrolled": 28 
+                }
+            ]
+        },
+        {
+            "name": "Black",
+            "children": [
+                {
+                    "name": "Armed Forces Family",
+                    "enrolled": 110
+                },
+                {
+                    "name": "Structed English Immersion Program or similar",
+                    "enrolled": 46
+                },
+                {
+                    "name": "Homeless",
+                    "enrolled": 155
+                },
+                {
+                    "name": "Developmental Bilingual Program",
+                    "enrolled": 4
+                },
+                {
+                    "name": "Parents Opted Out of EL Services",
+                    "enrolled": 1
+                },
+                {
+                    "name": "GATE",
+                    "enrolled": 36
+                },
+                {
+                    "name": "TK",
+                    "enrolled": 75
+                }
+            ]
+        }
+    ]}
