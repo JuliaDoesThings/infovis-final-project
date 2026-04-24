@@ -613,7 +613,8 @@ const formatData = (data)=>{
 const loadJSONData = ()=>{
     const jsonData = require("92f7757a60309c85");
     return jsonData;
-} /*
+} //build JSON from csv file
+ /*
 //convert Compiled_Student_Data into a json 
 const formatToJSON = (unformattedData) => {
     let compliedData = {
@@ -5202,6 +5203,8 @@ const updateTreemap = (selectedFilter, data)=>{
     // Update the treemap here
     const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.gender === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
     const updatedBins = (0, _sharedConstants.binGenerator)(updatedData);
+    const xScale = d3.scaleLinear();
+    const yScale = d3.scaleLinear();
     const treemapRects = (0, _d3Selection.select)("#treemap rect");
     treemapRects.data(updatedBins).transition().duration(500).ease((0, _d3.easeLinear)).attr("y", (d)=>yScale(d.length)).attr("height", (d)=>innerHeight - yScale(d.length));
 };
@@ -5358,7 +5361,373 @@ parcelHelpers.exportAll(_d3Transition, exports);
 var _d3Zoom = require("d3-zoom");
 parcelHelpers.exportAll(_d3Zoom, exports);
 
-},{"d3-array":false,"d3-axis":false,"d3-brush":"2yMW3","d3-chord":false,"d3-color":false,"d3-contour":false,"d3-delaunay":false,"d3-dispatch":false,"d3-drag":false,"d3-dsv":false,"d3-ease":"an8bB","d3-fetch":false,"d3-force":false,"d3-format":false,"d3-geo":false,"d3-hierarchy":false,"d3-interpolate":false,"d3-path":false,"d3-polygon":false,"d3-quadtree":false,"d3-random":false,"d3-scale":false,"d3-scale-chromatic":false,"d3-selection":false,"d3-shape":false,"d3-time":false,"d3-time-format":false,"d3-timer":false,"d3-transition":"9rwmO","d3-zoom":"2OBcd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2yMW3":[function(require,module,exports) {
+},{"d3-array":false,"d3-axis":false,"d3-brush":"2yMW3","d3-chord":false,"d3-color":false,"d3-contour":false,"d3-delaunay":false,"d3-dispatch":false,"d3-drag":false,"d3-dsv":false,"d3-ease":"an8bB","d3-fetch":false,"d3-force":false,"d3-format":false,"d3-geo":false,"d3-hierarchy":false,"d3-interpolate":false,"d3-path":false,"d3-polygon":false,"d3-quadtree":false,"d3-random":false,"d3-scale":"ic5Qe","d3-scale-chromatic":false,"d3-selection":false,"d3-shape":false,"d3-time":false,"d3-time-format":false,"d3-timer":false,"d3-transition":"9rwmO","d3-zoom":"2OBcd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6wnyH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "bisect", ()=>(0, _bisectJsDefault.default));
+parcelHelpers.export(exports, "bisectRight", ()=>(0, _bisectJs.bisectRight));
+parcelHelpers.export(exports, "bisectLeft", ()=>(0, _bisectJs.bisectLeft));
+parcelHelpers.export(exports, "bisectCenter", ()=>(0, _bisectJs.bisectCenter));
+parcelHelpers.export(exports, "ascending", ()=>(0, _ascendingJsDefault.default));
+parcelHelpers.export(exports, "bisector", ()=>(0, _bisectorJsDefault.default));
+parcelHelpers.export(exports, "blur", ()=>(0, _blurJs.blur));
+parcelHelpers.export(exports, "blur2", ()=>(0, _blurJs.blur2));
+parcelHelpers.export(exports, "blurImage", ()=>(0, _blurJs.blurImage));
+parcelHelpers.export(exports, "count", ()=>(0, _countJsDefault.default));
+parcelHelpers.export(exports, "cross", ()=>(0, _crossJsDefault.default));
+parcelHelpers.export(exports, "cumsum", ()=>(0, _cumsumJsDefault.default));
+parcelHelpers.export(exports, "descending", ()=>(0, _descendingJsDefault.default));
+parcelHelpers.export(exports, "deviation", ()=>(0, _deviationJsDefault.default));
+parcelHelpers.export(exports, "extent", ()=>(0, _extentJsDefault.default));
+parcelHelpers.export(exports, "Adder", ()=>(0, _fsumJs.Adder));
+parcelHelpers.export(exports, "fsum", ()=>(0, _fsumJs.fsum));
+parcelHelpers.export(exports, "fcumsum", ()=>(0, _fsumJs.fcumsum));
+parcelHelpers.export(exports, "group", ()=>(0, _groupJsDefault.default));
+parcelHelpers.export(exports, "flatGroup", ()=>(0, _groupJs.flatGroup));
+parcelHelpers.export(exports, "flatRollup", ()=>(0, _groupJs.flatRollup));
+parcelHelpers.export(exports, "groups", ()=>(0, _groupJs.groups));
+parcelHelpers.export(exports, "index", ()=>(0, _groupJs.index));
+parcelHelpers.export(exports, "indexes", ()=>(0, _groupJs.indexes));
+parcelHelpers.export(exports, "rollup", ()=>(0, _groupJs.rollup));
+parcelHelpers.export(exports, "rollups", ()=>(0, _groupJs.rollups));
+parcelHelpers.export(exports, "groupSort", ()=>(0, _groupSortJsDefault.default));
+parcelHelpers.export(exports, "bin", ()=>(0, _binJsDefault.default)) // Deprecated; use bin.
+;
+parcelHelpers.export(exports, "histogram", ()=>(0, _binJsDefault.default));
+parcelHelpers.export(exports, "thresholdFreedmanDiaconis", ()=>(0, _freedmanDiaconisJsDefault.default));
+parcelHelpers.export(exports, "thresholdScott", ()=>(0, _scottJsDefault.default));
+parcelHelpers.export(exports, "thresholdSturges", ()=>(0, _sturgesJsDefault.default));
+parcelHelpers.export(exports, "max", ()=>(0, _maxJsDefault.default));
+parcelHelpers.export(exports, "maxIndex", ()=>(0, _maxIndexJsDefault.default));
+parcelHelpers.export(exports, "mean", ()=>(0, _meanJsDefault.default));
+parcelHelpers.export(exports, "median", ()=>(0, _medianJsDefault.default));
+parcelHelpers.export(exports, "medianIndex", ()=>(0, _medianJs.medianIndex));
+parcelHelpers.export(exports, "merge", ()=>(0, _mergeJsDefault.default));
+parcelHelpers.export(exports, "min", ()=>(0, _minJsDefault.default));
+parcelHelpers.export(exports, "minIndex", ()=>(0, _minIndexJsDefault.default));
+parcelHelpers.export(exports, "mode", ()=>(0, _modeJsDefault.default));
+parcelHelpers.export(exports, "nice", ()=>(0, _niceJsDefault.default));
+parcelHelpers.export(exports, "pairs", ()=>(0, _pairsJsDefault.default));
+parcelHelpers.export(exports, "permute", ()=>(0, _permuteJsDefault.default));
+parcelHelpers.export(exports, "quantile", ()=>(0, _quantileJsDefault.default));
+parcelHelpers.export(exports, "quantileIndex", ()=>(0, _quantileJs.quantileIndex));
+parcelHelpers.export(exports, "quantileSorted", ()=>(0, _quantileJs.quantileSorted));
+parcelHelpers.export(exports, "quickselect", ()=>(0, _quickselectJsDefault.default));
+parcelHelpers.export(exports, "range", ()=>(0, _rangeJsDefault.default));
+parcelHelpers.export(exports, "rank", ()=>(0, _rankJsDefault.default));
+parcelHelpers.export(exports, "least", ()=>(0, _leastJsDefault.default));
+parcelHelpers.export(exports, "leastIndex", ()=>(0, _leastIndexJsDefault.default));
+parcelHelpers.export(exports, "greatest", ()=>(0, _greatestJsDefault.default));
+parcelHelpers.export(exports, "greatestIndex", ()=>(0, _greatestIndexJsDefault.default));
+parcelHelpers.export(exports, "scan", ()=>(0, _scanJsDefault.default)) // Deprecated; use leastIndex.
+;
+parcelHelpers.export(exports, "shuffle", ()=>(0, _shuffleJsDefault.default));
+parcelHelpers.export(exports, "shuffler", ()=>(0, _shuffleJs.shuffler));
+parcelHelpers.export(exports, "sum", ()=>(0, _sumJsDefault.default));
+parcelHelpers.export(exports, "ticks", ()=>(0, _ticksJsDefault.default));
+parcelHelpers.export(exports, "tickIncrement", ()=>(0, _ticksJs.tickIncrement));
+parcelHelpers.export(exports, "tickStep", ()=>(0, _ticksJs.tickStep));
+parcelHelpers.export(exports, "transpose", ()=>(0, _transposeJsDefault.default));
+parcelHelpers.export(exports, "variance", ()=>(0, _varianceJsDefault.default));
+parcelHelpers.export(exports, "zip", ()=>(0, _zipJsDefault.default));
+parcelHelpers.export(exports, "every", ()=>(0, _everyJsDefault.default));
+parcelHelpers.export(exports, "some", ()=>(0, _someJsDefault.default));
+parcelHelpers.export(exports, "filter", ()=>(0, _filterJsDefault.default));
+parcelHelpers.export(exports, "map", ()=>(0, _mapJsDefault.default));
+parcelHelpers.export(exports, "reduce", ()=>(0, _reduceJsDefault.default));
+parcelHelpers.export(exports, "reverse", ()=>(0, _reverseJsDefault.default));
+parcelHelpers.export(exports, "sort", ()=>(0, _sortJsDefault.default));
+parcelHelpers.export(exports, "difference", ()=>(0, _differenceJsDefault.default));
+parcelHelpers.export(exports, "disjoint", ()=>(0, _disjointJsDefault.default));
+parcelHelpers.export(exports, "intersection", ()=>(0, _intersectionJsDefault.default));
+parcelHelpers.export(exports, "subset", ()=>(0, _subsetJsDefault.default));
+parcelHelpers.export(exports, "superset", ()=>(0, _supersetJsDefault.default));
+parcelHelpers.export(exports, "union", ()=>(0, _unionJsDefault.default));
+parcelHelpers.export(exports, "InternMap", ()=>(0, _internmap.InternMap));
+parcelHelpers.export(exports, "InternSet", ()=>(0, _internmap.InternSet));
+var _bisectJs = require("./bisect.js");
+var _bisectJsDefault = parcelHelpers.interopDefault(_bisectJs);
+var _ascendingJs = require("./ascending.js");
+var _ascendingJsDefault = parcelHelpers.interopDefault(_ascendingJs);
+var _bisectorJs = require("./bisector.js");
+var _bisectorJsDefault = parcelHelpers.interopDefault(_bisectorJs);
+var _blurJs = require("./blur.js");
+var _countJs = require("./count.js");
+var _countJsDefault = parcelHelpers.interopDefault(_countJs);
+var _crossJs = require("./cross.js");
+var _crossJsDefault = parcelHelpers.interopDefault(_crossJs);
+var _cumsumJs = require("./cumsum.js");
+var _cumsumJsDefault = parcelHelpers.interopDefault(_cumsumJs);
+var _descendingJs = require("./descending.js");
+var _descendingJsDefault = parcelHelpers.interopDefault(_descendingJs);
+var _deviationJs = require("./deviation.js");
+var _deviationJsDefault = parcelHelpers.interopDefault(_deviationJs);
+var _extentJs = require("./extent.js");
+var _extentJsDefault = parcelHelpers.interopDefault(_extentJs);
+var _fsumJs = require("./fsum.js");
+var _groupJs = require("./group.js");
+var _groupJsDefault = parcelHelpers.interopDefault(_groupJs);
+var _groupSortJs = require("./groupSort.js");
+var _groupSortJsDefault = parcelHelpers.interopDefault(_groupSortJs);
+var _binJs = require("./bin.js");
+var _binJsDefault = parcelHelpers.interopDefault(_binJs);
+var _freedmanDiaconisJs = require("./threshold/freedmanDiaconis.js");
+var _freedmanDiaconisJsDefault = parcelHelpers.interopDefault(_freedmanDiaconisJs);
+var _scottJs = require("./threshold/scott.js");
+var _scottJsDefault = parcelHelpers.interopDefault(_scottJs);
+var _sturgesJs = require("./threshold/sturges.js");
+var _sturgesJsDefault = parcelHelpers.interopDefault(_sturgesJs);
+var _maxJs = require("./max.js");
+var _maxJsDefault = parcelHelpers.interopDefault(_maxJs);
+var _maxIndexJs = require("./maxIndex.js");
+var _maxIndexJsDefault = parcelHelpers.interopDefault(_maxIndexJs);
+var _meanJs = require("./mean.js");
+var _meanJsDefault = parcelHelpers.interopDefault(_meanJs);
+var _medianJs = require("./median.js");
+var _medianJsDefault = parcelHelpers.interopDefault(_medianJs);
+var _mergeJs = require("./merge.js");
+var _mergeJsDefault = parcelHelpers.interopDefault(_mergeJs);
+var _minJs = require("./min.js");
+var _minJsDefault = parcelHelpers.interopDefault(_minJs);
+var _minIndexJs = require("./minIndex.js");
+var _minIndexJsDefault = parcelHelpers.interopDefault(_minIndexJs);
+var _modeJs = require("./mode.js");
+var _modeJsDefault = parcelHelpers.interopDefault(_modeJs);
+var _niceJs = require("./nice.js");
+var _niceJsDefault = parcelHelpers.interopDefault(_niceJs);
+var _pairsJs = require("./pairs.js");
+var _pairsJsDefault = parcelHelpers.interopDefault(_pairsJs);
+var _permuteJs = require("./permute.js");
+var _permuteJsDefault = parcelHelpers.interopDefault(_permuteJs);
+var _quantileJs = require("./quantile.js");
+var _quantileJsDefault = parcelHelpers.interopDefault(_quantileJs);
+var _quickselectJs = require("./quickselect.js");
+var _quickselectJsDefault = parcelHelpers.interopDefault(_quickselectJs);
+var _rangeJs = require("./range.js");
+var _rangeJsDefault = parcelHelpers.interopDefault(_rangeJs);
+var _rankJs = require("./rank.js");
+var _rankJsDefault = parcelHelpers.interopDefault(_rankJs);
+var _leastJs = require("./least.js");
+var _leastJsDefault = parcelHelpers.interopDefault(_leastJs);
+var _leastIndexJs = require("./leastIndex.js");
+var _leastIndexJsDefault = parcelHelpers.interopDefault(_leastIndexJs);
+var _greatestJs = require("./greatest.js");
+var _greatestJsDefault = parcelHelpers.interopDefault(_greatestJs);
+var _greatestIndexJs = require("./greatestIndex.js");
+var _greatestIndexJsDefault = parcelHelpers.interopDefault(_greatestIndexJs);
+var _scanJs = require("./scan.js");
+var _scanJsDefault = parcelHelpers.interopDefault(_scanJs);
+var _shuffleJs = require("./shuffle.js");
+var _shuffleJsDefault = parcelHelpers.interopDefault(_shuffleJs);
+var _sumJs = require("./sum.js");
+var _sumJsDefault = parcelHelpers.interopDefault(_sumJs);
+var _ticksJs = require("./ticks.js");
+var _ticksJsDefault = parcelHelpers.interopDefault(_ticksJs);
+var _transposeJs = require("./transpose.js");
+var _transposeJsDefault = parcelHelpers.interopDefault(_transposeJs);
+var _varianceJs = require("./variance.js");
+var _varianceJsDefault = parcelHelpers.interopDefault(_varianceJs);
+var _zipJs = require("./zip.js");
+var _zipJsDefault = parcelHelpers.interopDefault(_zipJs);
+var _everyJs = require("./every.js");
+var _everyJsDefault = parcelHelpers.interopDefault(_everyJs);
+var _someJs = require("./some.js");
+var _someJsDefault = parcelHelpers.interopDefault(_someJs);
+var _filterJs = require("./filter.js");
+var _filterJsDefault = parcelHelpers.interopDefault(_filterJs);
+var _mapJs = require("./map.js");
+var _mapJsDefault = parcelHelpers.interopDefault(_mapJs);
+var _reduceJs = require("./reduce.js");
+var _reduceJsDefault = parcelHelpers.interopDefault(_reduceJs);
+var _reverseJs = require("./reverse.js");
+var _reverseJsDefault = parcelHelpers.interopDefault(_reverseJs);
+var _sortJs = require("./sort.js");
+var _sortJsDefault = parcelHelpers.interopDefault(_sortJs);
+var _differenceJs = require("./difference.js");
+var _differenceJsDefault = parcelHelpers.interopDefault(_differenceJs);
+var _disjointJs = require("./disjoint.js");
+var _disjointJsDefault = parcelHelpers.interopDefault(_disjointJs);
+var _intersectionJs = require("./intersection.js");
+var _intersectionJsDefault = parcelHelpers.interopDefault(_intersectionJs);
+var _subsetJs = require("./subset.js");
+var _subsetJsDefault = parcelHelpers.interopDefault(_subsetJs);
+var _supersetJs = require("./superset.js");
+var _supersetJsDefault = parcelHelpers.interopDefault(_supersetJs);
+var _unionJs = require("./union.js");
+var _unionJsDefault = parcelHelpers.interopDefault(_unionJs);
+var _internmap = require("internmap");
+
+},{"./bisect.js":"RmLAu","./ascending.js":false,"./bisector.js":false,"./blur.js":false,"./count.js":false,"./cross.js":false,"./cumsum.js":false,"./descending.js":false,"./deviation.js":false,"./extent.js":false,"./fsum.js":false,"./group.js":false,"./groupSort.js":false,"./bin.js":false,"./threshold/freedmanDiaconis.js":false,"./threshold/scott.js":false,"./threshold/sturges.js":false,"./max.js":false,"./maxIndex.js":false,"./mean.js":false,"./median.js":false,"./merge.js":false,"./min.js":false,"./minIndex.js":false,"./mode.js":false,"./nice.js":false,"./pairs.js":false,"./permute.js":false,"./quantile.js":false,"./quickselect.js":false,"./range.js":false,"./rank.js":false,"./least.js":false,"./leastIndex.js":false,"./greatest.js":false,"./greatestIndex.js":false,"./scan.js":false,"./shuffle.js":false,"./sum.js":false,"./ticks.js":"2pgru","./transpose.js":false,"./variance.js":false,"./zip.js":false,"./every.js":false,"./some.js":false,"./filter.js":false,"./map.js":false,"./reduce.js":false,"./reverse.js":false,"./sort.js":false,"./difference.js":false,"./disjoint.js":false,"./intersection.js":false,"./subset.js":false,"./superset.js":false,"./union.js":false,"internmap":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"RmLAu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "bisectRight", ()=>bisectRight);
+parcelHelpers.export(exports, "bisectLeft", ()=>bisectLeft);
+parcelHelpers.export(exports, "bisectCenter", ()=>bisectCenter);
+var _ascendingJs = require("./ascending.js");
+var _ascendingJsDefault = parcelHelpers.interopDefault(_ascendingJs);
+var _bisectorJs = require("./bisector.js");
+var _bisectorJsDefault = parcelHelpers.interopDefault(_bisectorJs);
+var _numberJs = require("./number.js");
+var _numberJsDefault = parcelHelpers.interopDefault(_numberJs);
+const ascendingBisect = (0, _bisectorJsDefault.default)((0, _ascendingJsDefault.default));
+const bisectRight = ascendingBisect.right;
+const bisectLeft = ascendingBisect.left;
+const bisectCenter = (0, _bisectorJsDefault.default)((0, _numberJsDefault.default)).center;
+exports.default = bisectRight;
+
+},{"./ascending.js":"8eZ5h","./bisector.js":"lRWQM","./number.js":"kZXXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8eZ5h":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function ascending(a, b) {
+    return a == null || b == null ? NaN : a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
+}
+exports.default = ascending;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lRWQM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _ascendingJs = require("./ascending.js");
+var _ascendingJsDefault = parcelHelpers.interopDefault(_ascendingJs);
+var _descendingJs = require("./descending.js");
+var _descendingJsDefault = parcelHelpers.interopDefault(_descendingJs);
+function bisector(f) {
+    let compare1, compare2, delta;
+    // If an accessor is specified, promote it to a comparator. In this case we
+    // can test whether the search value is (self-) comparable. We can’t do this
+    // for a comparator (except for specific, known comparators) because we can’t
+    // tell if the comparator is symmetric, and an asymmetric comparator can’t be
+    // used to test whether a single value is comparable.
+    if (f.length !== 2) {
+        compare1 = (0, _ascendingJsDefault.default);
+        compare2 = (d, x)=>(0, _ascendingJsDefault.default)(f(d), x);
+        delta = (d, x)=>f(d) - x;
+    } else {
+        compare1 = f === (0, _ascendingJsDefault.default) || f === (0, _descendingJsDefault.default) ? f : zero;
+        compare2 = f;
+        delta = f;
+    }
+    function left(a, x, lo = 0, hi = a.length) {
+        if (lo < hi) {
+            if (compare1(x, x) !== 0) return hi;
+            do {
+                const mid = lo + hi >>> 1;
+                if (compare2(a[mid], x) < 0) lo = mid + 1;
+                else hi = mid;
+            }while (lo < hi);
+        }
+        return lo;
+    }
+    function right(a, x, lo = 0, hi = a.length) {
+        if (lo < hi) {
+            if (compare1(x, x) !== 0) return hi;
+            do {
+                const mid = lo + hi >>> 1;
+                if (compare2(a[mid], x) <= 0) lo = mid + 1;
+                else hi = mid;
+            }while (lo < hi);
+        }
+        return lo;
+    }
+    function center(a, x, lo = 0, hi = a.length) {
+        const i = left(a, x, lo, hi - 1);
+        return i > lo && delta(a[i - 1], x) > -delta(a[i], x) ? i - 1 : i;
+    }
+    return {
+        left,
+        center,
+        right
+    };
+}
+exports.default = bisector;
+function zero() {
+    return 0;
+}
+
+},{"./ascending.js":"8eZ5h","./descending.js":"jPR36","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jPR36":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function descending(a, b) {
+    return a == null || b == null ? NaN : b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
+}
+exports.default = descending;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kZXXS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "numbers", ()=>numbers);
+function number(x) {
+    return x === null ? NaN : +x;
+}
+exports.default = number;
+function* numbers(values, valueof) {
+    if (valueof === undefined) {
+        for (let value of values)if (value != null && (value = +value) >= value) yield value;
+    } else {
+        let index = -1;
+        for (let value of values)if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) yield value;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2pgru":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "tickIncrement", ()=>tickIncrement);
+parcelHelpers.export(exports, "tickStep", ()=>tickStep);
+const e10 = Math.sqrt(50), e5 = Math.sqrt(10), e2 = Math.sqrt(2);
+function tickSpec(start, stop, count) {
+    const step = (stop - start) / Math.max(0, count), power = Math.floor(Math.log10(step)), error = step / Math.pow(10, power), factor = error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1;
+    let i1, i2, inc;
+    if (power < 0) {
+        inc = Math.pow(10, -power) / factor;
+        i1 = Math.round(start * inc);
+        i2 = Math.round(stop * inc);
+        if (i1 / inc < start) ++i1;
+        if (i2 / inc > stop) --i2;
+        inc = -inc;
+    } else {
+        inc = Math.pow(10, power) * factor;
+        i1 = Math.round(start / inc);
+        i2 = Math.round(stop / inc);
+        if (i1 * inc < start) ++i1;
+        if (i2 * inc > stop) --i2;
+    }
+    if (i2 < i1 && 0.5 <= count && count < 2) return tickSpec(start, stop, count * 2);
+    return [
+        i1,
+        i2,
+        inc
+    ];
+}
+function ticks(start, stop, count) {
+    stop = +stop, start = +start, count = +count;
+    if (!(count > 0)) return [];
+    if (start === stop) return [
+        start
+    ];
+    const reverse = stop < start, [i1, i2, inc] = reverse ? tickSpec(stop, start, count) : tickSpec(start, stop, count);
+    if (!(i2 >= i1)) return [];
+    const n = i2 - i1 + 1, ticks = new Array(n);
+    if (reverse) {
+        if (inc < 0) for(let i = 0; i < n; ++i)ticks[i] = (i2 - i) / -inc;
+        else for(let i = 0; i < n; ++i)ticks[i] = (i2 - i) * inc;
+    } else {
+        if (inc < 0) for(let i = 0; i < n; ++i)ticks[i] = (i1 + i) / -inc;
+        else for(let i = 0; i < n; ++i)ticks[i] = (i1 + i) * inc;
+    }
+    return ticks;
+}
+exports.default = ticks;
+function tickIncrement(start, stop, count) {
+    stop = +stop, start = +start, count = +count;
+    return tickSpec(start, stop, count)[2];
+}
+function tickStep(start, stop, count) {
+    stop = +stop, start = +start, count = +count;
+    const reverse = stop < start, inc = reverse ? tickIncrement(stop, start, count) : tickIncrement(start, stop, count);
+    return (reverse ? -1 : 1) * (inc < 0 ? 1 / -inc : inc);
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2yMW3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "brush", ()=>(0, _brushJsDefault.default));
@@ -7248,7 +7617,7 @@ var _piecewiseJsDefault = parcelHelpers.interopDefault(_piecewiseJs);
 var _quantizeJs = require("./quantize.js");
 var _quantizeJsDefault = parcelHelpers.interopDefault(_quantizeJs);
 
-},{"./value.js":"1hteL","./array.js":false,"./basis.js":false,"./basisClosed.js":false,"./date.js":false,"./discrete.js":false,"./hue.js":false,"./number.js":"fDu05","./numberArray.js":false,"./object.js":false,"./round.js":false,"./string.js":"9Ymp8","./transform/index.js":"492PL","./zoom.js":"bUrJV","./rgb.js":"g10wN","./hsl.js":false,"./lab.js":false,"./hcl.js":false,"./cubehelix.js":false,"./piecewise.js":false,"./quantize.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1hteL":[function(require,module,exports) {
+},{"./value.js":"1hteL","./array.js":false,"./basis.js":false,"./basisClosed.js":false,"./date.js":false,"./discrete.js":false,"./hue.js":false,"./number.js":"fDu05","./numberArray.js":false,"./object.js":false,"./round.js":"1FXBp","./string.js":"9Ymp8","./transform/index.js":"492PL","./zoom.js":"bUrJV","./rgb.js":"g10wN","./hsl.js":false,"./lab.js":false,"./hcl.js":false,"./cubehelix.js":false,"./piecewise.js":false,"./quantize.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1hteL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _d3Color = require("d3-color");
@@ -7889,7 +8258,16 @@ exports.default = function(a, b) {
     });
 };
 
-},{"./number.js":"fDu05","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"492PL":[function(require,module,exports) {
+},{"./number.js":"fDu05","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1FXBp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(a, b) {
+    return a = +a, b = +b, function(t) {
+        return Math.round(a * (1 - t) + b * t);
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"492PL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "interpolateTransformCss", ()=>interpolateTransformCss);
@@ -9166,7 +9544,705 @@ exports.default = function(event) {
     event.stopImmediatePropagation();
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2OBcd":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"djAFA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "formatDefaultLocale", ()=>(0, _defaultLocaleJsDefault.default));
+parcelHelpers.export(exports, "format", ()=>(0, _defaultLocaleJs.format));
+parcelHelpers.export(exports, "formatPrefix", ()=>(0, _defaultLocaleJs.formatPrefix));
+parcelHelpers.export(exports, "formatLocale", ()=>(0, _localeJsDefault.default));
+parcelHelpers.export(exports, "formatSpecifier", ()=>(0, _formatSpecifierJsDefault.default));
+parcelHelpers.export(exports, "FormatSpecifier", ()=>(0, _formatSpecifierJs.FormatSpecifier));
+parcelHelpers.export(exports, "precisionFixed", ()=>(0, _precisionFixedJsDefault.default));
+parcelHelpers.export(exports, "precisionPrefix", ()=>(0, _precisionPrefixJsDefault.default));
+parcelHelpers.export(exports, "precisionRound", ()=>(0, _precisionRoundJsDefault.default));
+var _defaultLocaleJs = require("./defaultLocale.js");
+var _defaultLocaleJsDefault = parcelHelpers.interopDefault(_defaultLocaleJs);
+var _localeJs = require("./locale.js");
+var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
+var _formatSpecifierJs = require("./formatSpecifier.js");
+var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
+var _precisionFixedJs = require("./precisionFixed.js");
+var _precisionFixedJsDefault = parcelHelpers.interopDefault(_precisionFixedJs);
+var _precisionPrefixJs = require("./precisionPrefix.js");
+var _precisionPrefixJsDefault = parcelHelpers.interopDefault(_precisionPrefixJs);
+var _precisionRoundJs = require("./precisionRound.js");
+var _precisionRoundJsDefault = parcelHelpers.interopDefault(_precisionRoundJs);
+
+},{"./defaultLocale.js":"do3Gx","./locale.js":false,"./formatSpecifier.js":"3Dh20","./precisionFixed.js":"bCilF","./precisionPrefix.js":"eBqT0","./precisionRound.js":"flbnL","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"do3Gx":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "format", ()=>format);
+parcelHelpers.export(exports, "formatPrefix", ()=>formatPrefix);
+var _localeJs = require("./locale.js");
+var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
+var locale;
+var format;
+var formatPrefix;
+defaultLocale({
+    thousands: ",",
+    grouping: [
+        3
+    ],
+    currency: [
+        "$",
+        ""
+    ]
+});
+function defaultLocale(definition) {
+    locale = (0, _localeJsDefault.default)(definition);
+    format = locale.format;
+    formatPrefix = locale.formatPrefix;
+    return locale;
+}
+exports.default = defaultLocale;
+
+},{"./locale.js":"cakiE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cakiE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+var _formatGroupJs = require("./formatGroup.js");
+var _formatGroupJsDefault = parcelHelpers.interopDefault(_formatGroupJs);
+var _formatNumeralsJs = require("./formatNumerals.js");
+var _formatNumeralsJsDefault = parcelHelpers.interopDefault(_formatNumeralsJs);
+var _formatSpecifierJs = require("./formatSpecifier.js");
+var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
+var _formatTrimJs = require("./formatTrim.js");
+var _formatTrimJsDefault = parcelHelpers.interopDefault(_formatTrimJs);
+var _formatTypesJs = require("./formatTypes.js");
+var _formatTypesJsDefault = parcelHelpers.interopDefault(_formatTypesJs);
+var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
+var _identityJs = require("./identity.js");
+var _identityJsDefault = parcelHelpers.interopDefault(_identityJs);
+var map = Array.prototype.map, prefixes = [
+    "y",
+    "z",
+    "a",
+    "f",
+    "p",
+    "n",
+    "\xb5",
+    "m",
+    "",
+    "k",
+    "M",
+    "G",
+    "T",
+    "P",
+    "E",
+    "Z",
+    "Y"
+];
+exports.default = function(locale) {
+    var group = locale.grouping === undefined || locale.thousands === undefined ? (0, _identityJsDefault.default) : (0, _formatGroupJsDefault.default)(map.call(locale.grouping, Number), locale.thousands + ""), currencyPrefix = locale.currency === undefined ? "" : locale.currency[0] + "", currencySuffix = locale.currency === undefined ? "" : locale.currency[1] + "", decimal = locale.decimal === undefined ? "." : locale.decimal + "", numerals = locale.numerals === undefined ? (0, _identityJsDefault.default) : (0, _formatNumeralsJsDefault.default)(map.call(locale.numerals, String)), percent = locale.percent === undefined ? "%" : locale.percent + "", minus = locale.minus === undefined ? "−" : locale.minus + "", nan = locale.nan === undefined ? "NaN" : locale.nan + "";
+    function newFormat(specifier, options) {
+        specifier = (0, _formatSpecifierJsDefault.default)(specifier);
+        var fill = specifier.fill, align = specifier.align, sign = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+        // The "n" type is an alias for ",g".
+        if (type === "n") comma = true, type = "g";
+        else if (!(0, _formatTypesJsDefault.default)[type]) precision === undefined && (precision = 12), trim = true, type = "g";
+        // If zero fill is specified, padding goes after sign and before digits.
+        if (zero || fill === "0" && align === "=") zero = true, fill = "0", align = "=";
+        // Compute the prefix and suffix.
+        // For SI-prefix, the suffix is lazily computed.
+        var prefix = (options && options.prefix !== undefined ? options.prefix : "") + (symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : ""), suffix = (symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "") + (options && options.suffix !== undefined ? options.suffix : "");
+        // What format function should we use?
+        // Is this an integer type?
+        // Can this type generate exponential notation?
+        var formatType = (0, _formatTypesJsDefault.default)[type], maybeSuffix = /[defgprs%]/.test(type);
+        // Set the default precision if not specified,
+        // or clamp the specified precision to the supported range.
+        // For significant precision, it must be in [1, 21].
+        // For fixed precision, it must be in [0, 20].
+        precision = precision === undefined ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
+        function format(value) {
+            var valuePrefix = prefix, valueSuffix = suffix, i, n, c;
+            if (type === "c") {
+                valueSuffix = formatType(value) + valueSuffix;
+                value = "";
+            } else {
+                value = +value;
+                // Determine the sign. -0 is not less than 0, but 1 / -0 is!
+                var valueNegative = value < 0 || 1 / value < 0;
+                // Perform the initial formatting.
+                value = isNaN(value) ? nan : formatType(Math.abs(value), precision);
+                // Trim insignificant zeros.
+                if (trim) value = (0, _formatTrimJsDefault.default)(value);
+                // If a negative value rounds to zero after formatting, and no explicit positive sign is requested, hide the sign.
+                if (valueNegative && +value === 0 && sign !== "+") valueNegative = false;
+                // Compute the prefix and suffix.
+                valuePrefix = (valueNegative ? sign === "(" ? sign : minus : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
+                valueSuffix = (type === "s" && !isNaN(value) && (0, _formatPrefixAutoJs.prefixExponent) !== undefined ? prefixes[8 + (0, _formatPrefixAutoJs.prefixExponent) / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
+                // Break the formatted value into the integer “value” part that can be
+                // grouped, and fractional or exponential “suffix” part that is not.
+                if (maybeSuffix) {
+                    i = -1, n = value.length;
+                    while(++i < n)if (c = value.charCodeAt(i), 48 > c || c > 57) {
+                        valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
+                        value = value.slice(0, i);
+                        break;
+                    }
+                }
+            }
+            // If the fill character is not "0", grouping is applied before padding.
+            if (comma && !zero) value = group(value, Infinity);
+            // Compute the padding.
+            var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
+            // If the fill character is "0", grouping is applied after padding.
+            if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+            // Reconstruct the final output based on the desired alignment.
+            switch(align){
+                case "<":
+                    value = valuePrefix + value + valueSuffix + padding;
+                    break;
+                case "=":
+                    value = valuePrefix + padding + value + valueSuffix;
+                    break;
+                case "^":
+                    value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length);
+                    break;
+                default:
+                    value = padding + valuePrefix + value + valueSuffix;
+                    break;
+            }
+            return numerals(value);
+        }
+        format.toString = function() {
+            return specifier + "";
+        };
+        return format;
+    }
+    function formatPrefix(specifier, value) {
+        var e = Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3, k = Math.pow(10, -e), f = newFormat((specifier = (0, _formatSpecifierJsDefault.default)(specifier), specifier.type = "f", specifier), {
+            suffix: prefixes[8 + e / 3]
+        });
+        return function(value) {
+            return f(k * value);
+        };
+    }
+    return {
+        format: newFormat,
+        formatPrefix: formatPrefix
+    };
+};
+
+},{"./exponent.js":"4XDUv","./formatGroup.js":"1KGqA","./formatNumerals.js":"ck38o","./formatSpecifier.js":"3Dh20","./formatTrim.js":"6qnZH","./formatTypes.js":"em3ZR","./formatPrefixAuto.js":"ci0A7","./identity.js":"lHKS1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4XDUv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+exports.default = function(x) {
+    return x = (0, _formatDecimalJs.formatDecimalParts)(Math.abs(x)), x ? x[1] : NaN;
+};
+
+},{"./formatDecimal.js":"cJJqz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cJJqz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// Computes the decimal coefficient and exponent of the specified number x with
+// significant digits p, where x is positive and p is in [1, 21] or undefined.
+// For example, formatDecimalParts(1.23) returns ["123", 0].
+parcelHelpers.export(exports, "formatDecimalParts", ()=>formatDecimalParts);
+exports.default = function(x) {
+    return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
+};
+function formatDecimalParts(x, p) {
+    if (!isFinite(x) || x === 0) return null; // NaN, ±Infinity, ±0
+    var i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e"), coefficient = x.slice(0, i);
+    // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
+    // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
+    return [
+        coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
+        +x.slice(i + 1)
+    ];
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1KGqA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(grouping, thousands) {
+    return function(value, width) {
+        var i = value.length, t = [], j = 0, g = grouping[0], length = 0;
+        while(i > 0 && g > 0){
+            if (length + g + 1 > width) g = Math.max(1, width - length);
+            t.push(value.substring(i -= g, i + g));
+            if ((length += g + 1) > width) break;
+            g = grouping[j = (j + 1) % grouping.length];
+        }
+        return t.reverse().join(thousands);
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ck38o":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(numerals) {
+    return function(value) {
+        return value.replace(/[0-9]/g, function(i) {
+            return numerals[+i];
+        });
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3Dh20":[function(require,module,exports) {
+// [[fill]align][sign][symbol][0][width][,][.precision][~][type]
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FormatSpecifier", ()=>FormatSpecifier);
+var re = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
+function formatSpecifier(specifier) {
+    if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+    var match;
+    return new FormatSpecifier({
+        fill: match[1],
+        align: match[2],
+        sign: match[3],
+        symbol: match[4],
+        zero: match[5],
+        width: match[6],
+        comma: match[7],
+        precision: match[8] && match[8].slice(1),
+        trim: match[9],
+        type: match[10]
+    });
+}
+exports.default = formatSpecifier;
+formatSpecifier.prototype = FormatSpecifier.prototype; // instanceof
+function FormatSpecifier(specifier) {
+    this.fill = specifier.fill === undefined ? " " : specifier.fill + "";
+    this.align = specifier.align === undefined ? ">" : specifier.align + "";
+    this.sign = specifier.sign === undefined ? "-" : specifier.sign + "";
+    this.symbol = specifier.symbol === undefined ? "" : specifier.symbol + "";
+    this.zero = !!specifier.zero;
+    this.width = specifier.width === undefined ? undefined : +specifier.width;
+    this.comma = !!specifier.comma;
+    this.precision = specifier.precision === undefined ? undefined : +specifier.precision;
+    this.trim = !!specifier.trim;
+    this.type = specifier.type === undefined ? "" : specifier.type + "";
+}
+FormatSpecifier.prototype.toString = function() {
+    return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width === undefined ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision === undefined ? "" : "." + Math.max(0, this.precision | 0)) + (this.trim ? "~" : "") + this.type;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6qnZH":[function(require,module,exports) {
+// Trims insignificant zeros, e.g., replaces 1.2000k with 1.2k.
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(s) {
+    out: for(var n = s.length, i = 1, i0 = -1, i1; i < n; ++i)switch(s[i]){
+        case ".":
+            i0 = i1 = i;
+            break;
+        case "0":
+            if (i0 === 0) i0 = i;
+            i1 = i;
+            break;
+        default:
+            if (!+s[i]) break out;
+            if (i0 > 0) i0 = 0;
+            break;
+    }
+    return i0 > 0 ? s.slice(0, i0) + s.slice(i1 + 1) : s;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"em3ZR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+var _formatDecimalJsDefault = parcelHelpers.interopDefault(_formatDecimalJs);
+var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
+var _formatPrefixAutoJsDefault = parcelHelpers.interopDefault(_formatPrefixAutoJs);
+var _formatRoundedJs = require("./formatRounded.js");
+var _formatRoundedJsDefault = parcelHelpers.interopDefault(_formatRoundedJs);
+exports.default = {
+    "%": (x, p)=>(x * 100).toFixed(p),
+    "b": (x)=>Math.round(x).toString(2),
+    "c": (x)=>x + "",
+    "d": (0, _formatDecimalJsDefault.default),
+    "e": (x, p)=>x.toExponential(p),
+    "f": (x, p)=>x.toFixed(p),
+    "g": (x, p)=>x.toPrecision(p),
+    "o": (x)=>Math.round(x).toString(8),
+    "p": (x, p)=>(0, _formatRoundedJsDefault.default)(x * 100, p),
+    "r": (0, _formatRoundedJsDefault.default),
+    "s": (0, _formatPrefixAutoJsDefault.default),
+    "X": (x)=>Math.round(x).toString(16).toUpperCase(),
+    "x": (x)=>Math.round(x).toString(16)
+};
+
+},{"./formatDecimal.js":"cJJqz","./formatPrefixAuto.js":"ci0A7","./formatRounded.js":"ji9Ja","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ci0A7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "prefixExponent", ()=>prefixExponent);
+var _formatDecimalJs = require("./formatDecimal.js");
+var prefixExponent;
+exports.default = function(x, p) {
+    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
+    if (!d) return prefixExponent = undefined, x.toPrecision(p);
+    var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
+    return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + (0, _formatDecimalJs.formatDecimalParts)(x, Math.max(0, p + i - 1))[0]; // less than 1y!
+};
+
+},{"./formatDecimal.js":"cJJqz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ji9Ja":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+exports.default = function(x, p) {
+    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0], exponent = d[1];
+    return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
+};
+
+},{"./formatDecimal.js":"cJJqz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lHKS1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(x) {
+    return x;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bCilF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step) {
+    return Math.max(0, -(0, _exponentJsDefault.default)(Math.abs(step)));
+};
+
+},{"./exponent.js":"4XDUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eBqT0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step, value) {
+    return Math.max(0, Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3 - (0, _exponentJsDefault.default)(Math.abs(step)));
+};
+
+},{"./exponent.js":"4XDUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"flbnL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step, max) {
+    step = Math.abs(step), max = Math.abs(max) - step;
+    return Math.max(0, (0, _exponentJsDefault.default)(max) - (0, _exponentJsDefault.default)(step)) + 1;
+};
+
+},{"./exponent.js":"4XDUv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ic5Qe":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "scaleBand", ()=>(0, _bandJsDefault.default));
+parcelHelpers.export(exports, "scalePoint", ()=>(0, _bandJs.point));
+parcelHelpers.export(exports, "scaleIdentity", ()=>(0, _identityJsDefault.default));
+parcelHelpers.export(exports, "scaleLinear", ()=>(0, _linearJsDefault.default));
+parcelHelpers.export(exports, "scaleLog", ()=>(0, _logJsDefault.default));
+parcelHelpers.export(exports, "scaleSymlog", ()=>(0, _symlogJsDefault.default));
+parcelHelpers.export(exports, "scaleOrdinal", ()=>(0, _ordinalJsDefault.default));
+parcelHelpers.export(exports, "scaleImplicit", ()=>(0, _ordinalJs.implicit));
+parcelHelpers.export(exports, "scalePow", ()=>(0, _powJsDefault.default));
+parcelHelpers.export(exports, "scaleSqrt", ()=>(0, _powJs.sqrt));
+parcelHelpers.export(exports, "scaleRadial", ()=>(0, _radialJsDefault.default));
+parcelHelpers.export(exports, "scaleQuantile", ()=>(0, _quantileJsDefault.default));
+parcelHelpers.export(exports, "scaleQuantize", ()=>(0, _quantizeJsDefault.default));
+parcelHelpers.export(exports, "scaleThreshold", ()=>(0, _thresholdJsDefault.default));
+parcelHelpers.export(exports, "scaleTime", ()=>(0, _timeJsDefault.default));
+parcelHelpers.export(exports, "scaleUtc", ()=>(0, _utcTimeJsDefault.default));
+parcelHelpers.export(exports, "scaleSequential", ()=>(0, _sequentialJsDefault.default));
+parcelHelpers.export(exports, "scaleSequentialLog", ()=>(0, _sequentialJs.sequentialLog));
+parcelHelpers.export(exports, "scaleSequentialPow", ()=>(0, _sequentialJs.sequentialPow));
+parcelHelpers.export(exports, "scaleSequentialSqrt", ()=>(0, _sequentialJs.sequentialSqrt));
+parcelHelpers.export(exports, "scaleSequentialSymlog", ()=>(0, _sequentialJs.sequentialSymlog));
+parcelHelpers.export(exports, "scaleSequentialQuantile", ()=>(0, _sequentialQuantileJsDefault.default));
+parcelHelpers.export(exports, "scaleDiverging", ()=>(0, _divergingJsDefault.default));
+parcelHelpers.export(exports, "scaleDivergingLog", ()=>(0, _divergingJs.divergingLog));
+parcelHelpers.export(exports, "scaleDivergingPow", ()=>(0, _divergingJs.divergingPow));
+parcelHelpers.export(exports, "scaleDivergingSqrt", ()=>(0, _divergingJs.divergingSqrt));
+parcelHelpers.export(exports, "scaleDivergingSymlog", ()=>(0, _divergingJs.divergingSymlog));
+parcelHelpers.export(exports, "tickFormat", ()=>(0, _tickFormatJsDefault.default));
+var _bandJs = require("./band.js");
+var _bandJsDefault = parcelHelpers.interopDefault(_bandJs);
+var _identityJs = require("./identity.js");
+var _identityJsDefault = parcelHelpers.interopDefault(_identityJs);
+var _linearJs = require("./linear.js");
+var _linearJsDefault = parcelHelpers.interopDefault(_linearJs);
+var _logJs = require("./log.js");
+var _logJsDefault = parcelHelpers.interopDefault(_logJs);
+var _symlogJs = require("./symlog.js");
+var _symlogJsDefault = parcelHelpers.interopDefault(_symlogJs);
+var _ordinalJs = require("./ordinal.js");
+var _ordinalJsDefault = parcelHelpers.interopDefault(_ordinalJs);
+var _powJs = require("./pow.js");
+var _powJsDefault = parcelHelpers.interopDefault(_powJs);
+var _radialJs = require("./radial.js");
+var _radialJsDefault = parcelHelpers.interopDefault(_radialJs);
+var _quantileJs = require("./quantile.js");
+var _quantileJsDefault = parcelHelpers.interopDefault(_quantileJs);
+var _quantizeJs = require("./quantize.js");
+var _quantizeJsDefault = parcelHelpers.interopDefault(_quantizeJs);
+var _thresholdJs = require("./threshold.js");
+var _thresholdJsDefault = parcelHelpers.interopDefault(_thresholdJs);
+var _timeJs = require("./time.js");
+var _timeJsDefault = parcelHelpers.interopDefault(_timeJs);
+var _utcTimeJs = require("./utcTime.js");
+var _utcTimeJsDefault = parcelHelpers.interopDefault(_utcTimeJs);
+var _sequentialJs = require("./sequential.js");
+var _sequentialJsDefault = parcelHelpers.interopDefault(_sequentialJs);
+var _sequentialQuantileJs = require("./sequentialQuantile.js");
+var _sequentialQuantileJsDefault = parcelHelpers.interopDefault(_sequentialQuantileJs);
+var _divergingJs = require("./diverging.js");
+var _divergingJsDefault = parcelHelpers.interopDefault(_divergingJs);
+var _tickFormatJs = require("./tickFormat.js");
+var _tickFormatJsDefault = parcelHelpers.interopDefault(_tickFormatJs);
+
+},{"./band.js":false,"./identity.js":false,"./linear.js":"bhlzq","./log.js":false,"./symlog.js":false,"./ordinal.js":false,"./pow.js":false,"./radial.js":false,"./quantile.js":false,"./quantize.js":false,"./threshold.js":false,"./time.js":false,"./utcTime.js":false,"./sequential.js":false,"./sequentialQuantile.js":false,"./diverging.js":false,"./tickFormat.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bhlzq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "linearish", ()=>linearish);
+var _d3Array = require("d3-array");
+var _continuousJs = require("./continuous.js");
+var _continuousJsDefault = parcelHelpers.interopDefault(_continuousJs);
+var _initJs = require("./init.js");
+var _tickFormatJs = require("./tickFormat.js");
+var _tickFormatJsDefault = parcelHelpers.interopDefault(_tickFormatJs);
+function linearish(scale) {
+    var domain = scale.domain;
+    scale.ticks = function(count) {
+        var d = domain();
+        return (0, _d3Array.ticks)(d[0], d[d.length - 1], count == null ? 10 : count);
+    };
+    scale.tickFormat = function(count, specifier) {
+        var d = domain();
+        return (0, _tickFormatJsDefault.default)(d[0], d[d.length - 1], count == null ? 10 : count, specifier);
+    };
+    scale.nice = function(count) {
+        if (count == null) count = 10;
+        var d = domain();
+        var i0 = 0;
+        var i1 = d.length - 1;
+        var start = d[i0];
+        var stop = d[i1];
+        var prestep;
+        var step;
+        var maxIter = 10;
+        if (stop < start) {
+            step = start, start = stop, stop = step;
+            step = i0, i0 = i1, i1 = step;
+        }
+        while(maxIter-- > 0){
+            step = (0, _d3Array.tickIncrement)(start, stop, count);
+            if (step === prestep) {
+                d[i0] = start;
+                d[i1] = stop;
+                return domain(d);
+            } else if (step > 0) {
+                start = Math.floor(start / step) * step;
+                stop = Math.ceil(stop / step) * step;
+            } else if (step < 0) {
+                start = Math.ceil(start * step) / step;
+                stop = Math.floor(stop * step) / step;
+            } else break;
+            prestep = step;
+        }
+        return scale;
+    };
+    return scale;
+}
+function linear() {
+    var scale = (0, _continuousJsDefault.default)();
+    scale.copy = function() {
+        return (0, _continuousJs.copy)(scale, linear());
+    };
+    (0, _initJs.initRange).apply(scale, arguments);
+    return linearish(scale);
+}
+exports.default = linear;
+
+},{"d3-array":"6wnyH","./continuous.js":"fZ2pu","./init.js":"8UmP0","./tickFormat.js":"4ExbM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fZ2pu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "identity", ()=>identity);
+parcelHelpers.export(exports, "copy", ()=>copy);
+parcelHelpers.export(exports, "transformer", ()=>transformer);
+var _d3Array = require("d3-array");
+var _d3Interpolate = require("d3-interpolate");
+var _constantJs = require("./constant.js");
+var _constantJsDefault = parcelHelpers.interopDefault(_constantJs);
+var _numberJs = require("./number.js");
+var _numberJsDefault = parcelHelpers.interopDefault(_numberJs);
+var unit = [
+    0,
+    1
+];
+function identity(x) {
+    return x;
+}
+function normalize(a, b) {
+    return (b -= a = +a) ? function(x) {
+        return (x - a) / b;
+    } : (0, _constantJsDefault.default)(isNaN(b) ? NaN : 0.5);
+}
+function clamper(a, b) {
+    var t;
+    if (a > b) t = a, a = b, b = t;
+    return function(x) {
+        return Math.max(a, Math.min(b, x));
+    };
+}
+// normalize(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
+// interpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding range value x in [a,b].
+function bimap(domain, range, interpolate) {
+    var d0 = domain[0], d1 = domain[1], r0 = range[0], r1 = range[1];
+    if (d1 < d0) d0 = normalize(d1, d0), r0 = interpolate(r1, r0);
+    else d0 = normalize(d0, d1), r0 = interpolate(r0, r1);
+    return function(x) {
+        return r0(d0(x));
+    };
+}
+function polymap(domain, range, interpolate) {
+    var j = Math.min(domain.length, range.length) - 1, d = new Array(j), r = new Array(j), i = -1;
+    // Reverse descending domains.
+    if (domain[j] < domain[0]) {
+        domain = domain.slice().reverse();
+        range = range.slice().reverse();
+    }
+    while(++i < j){
+        d[i] = normalize(domain[i], domain[i + 1]);
+        r[i] = interpolate(range[i], range[i + 1]);
+    }
+    return function(x) {
+        var i = (0, _d3Array.bisect)(domain, x, 1, j) - 1;
+        return r[i](d[i](x));
+    };
+}
+function copy(source, target) {
+    return target.domain(source.domain()).range(source.range()).interpolate(source.interpolate()).clamp(source.clamp()).unknown(source.unknown());
+}
+function transformer() {
+    var domain = unit, range = unit, interpolate = (0, _d3Interpolate.interpolate), transform, untransform, unknown, clamp = identity, piecewise, output, input;
+    function rescale() {
+        var n = Math.min(domain.length, range.length);
+        if (clamp !== identity) clamp = clamper(domain[0], domain[n - 1]);
+        piecewise = n > 2 ? polymap : bimap;
+        output = input = null;
+        return scale;
+    }
+    function scale(x) {
+        return x == null || isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
+    }
+    scale.invert = function(y) {
+        return clamp(untransform((input || (input = piecewise(range, domain.map(transform), (0, _d3Interpolate.interpolateNumber))))(y)));
+    };
+    scale.domain = function(_) {
+        return arguments.length ? (domain = Array.from(_, (0, _numberJsDefault.default)), rescale()) : domain.slice();
+    };
+    scale.range = function(_) {
+        return arguments.length ? (range = Array.from(_), rescale()) : range.slice();
+    };
+    scale.rangeRound = function(_) {
+        return range = Array.from(_), interpolate = (0, _d3Interpolate.interpolateRound), rescale();
+    };
+    scale.clamp = function(_) {
+        return arguments.length ? (clamp = _ ? true : identity, rescale()) : clamp !== identity;
+    };
+    scale.interpolate = function(_) {
+        return arguments.length ? (interpolate = _, rescale()) : interpolate;
+    };
+    scale.unknown = function(_) {
+        return arguments.length ? (unknown = _, scale) : unknown;
+    };
+    return function(t, u) {
+        transform = t, untransform = u;
+        return rescale();
+    };
+}
+function continuous() {
+    return transformer()(identity, identity);
+}
+exports.default = continuous;
+
+},{"d3-array":"6wnyH","d3-interpolate":"7dwW0","./constant.js":"5soXL","./number.js":"l0GvJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5soXL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function constants(x) {
+    return function() {
+        return x;
+    };
+}
+exports.default = constants;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l0GvJ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function number(x) {
+    return +x;
+}
+exports.default = number;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8UmP0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initRange", ()=>initRange);
+parcelHelpers.export(exports, "initInterpolator", ()=>initInterpolator);
+function initRange(domain, range) {
+    switch(arguments.length){
+        case 0:
+            break;
+        case 1:
+            this.range(domain);
+            break;
+        default:
+            this.range(range).domain(domain);
+            break;
+    }
+    return this;
+}
+function initInterpolator(domain, interpolator) {
+    switch(arguments.length){
+        case 0:
+            break;
+        case 1:
+            if (typeof domain === "function") this.interpolator(domain);
+            else this.range(domain);
+            break;
+        default:
+            this.domain(domain);
+            if (typeof interpolator === "function") this.interpolator(interpolator);
+            else this.range(interpolator);
+            break;
+    }
+    return this;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4ExbM":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _d3Array = require("d3-array");
+var _d3Format = require("d3-format");
+function tickFormat(start, stop, count, specifier) {
+    var step = (0, _d3Array.tickStep)(start, stop, count), precision;
+    specifier = (0, _d3Format.formatSpecifier)(specifier == null ? ",f" : specifier);
+    switch(specifier.type){
+        case "s":
+            var value = Math.max(Math.abs(start), Math.abs(stop));
+            if (specifier.precision == null && !isNaN(precision = (0, _d3Format.precisionPrefix)(step, value))) specifier.precision = precision;
+            return (0, _d3Format.formatPrefix)(specifier, value);
+        case "":
+        case "e":
+        case "g":
+        case "p":
+        case "r":
+            if (specifier.precision == null && !isNaN(precision = (0, _d3Format.precisionRound)(step, Math.max(Math.abs(start), Math.abs(stop))))) specifier.precision = precision - (specifier.type === "e");
+            break;
+        case "f":
+        case "%":
+            if (specifier.precision == null && !isNaN(precision = (0, _d3Format.precisionFixed)(step))) specifier.precision = precision - (specifier.type === "%") * 2;
+            break;
+    }
+    return (0, _d3Format.format)(specifier);
+}
+exports.default = tickFormat;
+
+},{"d3-array":"6wnyH","d3-format":"djAFA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2OBcd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "zoom", ()=>(0, _zoomJsDefault.default));

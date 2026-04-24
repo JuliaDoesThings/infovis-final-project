@@ -1,8 +1,8 @@
 import { select, selectAll } from "d3-selection";
-import { tempFilters, filters } from "./shared-constants";
+import { tempFilters, filters, binGenerator } from "./shared-constants";
 import { easeLinear } from "d3";
-import { binGenerator } from "./shared-constants";
 import { transition } from "d3";
+import { scaleLinear } from "d3";
 
 //create and populate filters
 export const populateFilters = (data) => {
@@ -41,7 +41,10 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
     : data.filter(respondent => respondent.gender                 
         === selectedFilter);                  //filter the data to make sure respodent gender matches selected filter            
 
-  const updatedBins = binGenerator(updatedData);                  
+  const updatedBins = binGenerator(updatedData);          
+  const xScale = d3.scaleLinear();
+  const yScale = d3.scaleLinear();
+      
 
   const treemapRects = select("#treemap rect")
   

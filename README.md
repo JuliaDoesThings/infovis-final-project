@@ -1,4 +1,4 @@
-# 100 Most Spoken Languages
+# Enrollment in Special Ed Programs by Race
 
 Project built along with chapter 11 of [D3.js in Action, 3rd edition](https://www.manning.com/books/d3js-in-action-third-edition). Refer to the chapter for a breakdown of each step.
 
@@ -25,7 +25,7 @@ npm install
 3. Start the project:
 
 ```bash
-parcel src/index.html
+parcel index.html
 ```
 
 4. The port at which your project is available will be displayed in the terminal window.

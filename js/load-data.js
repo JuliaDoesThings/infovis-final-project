@@ -14,6 +14,7 @@ export const loadTestData = () => {
 
 };
 
+//issue: throws error "Uncaught Error: missing: Enrollment by Race"
 export const loadRealData = () => {
 
     //load the data
@@ -47,6 +48,8 @@ export const loadJSONData = () => {
     const jsonData = require("../data/Student_Data.json");
     return jsonData;
 }
+
+//build JSON from csv file
 /*
 //convert Compiled_Student_Data into a json 
 const formatToJSON = (unformattedData) => {
