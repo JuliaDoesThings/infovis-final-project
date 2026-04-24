@@ -28,24 +28,24 @@ filterButtons
         filterButtons.selectAll(".filter")
             .classed("active", filter => filter.id === d.id ? true : false); 
       
-        updateHistogram(d.id, data); 
+        updateTreemap(d.id, data); 
         }
     });                                    
 
 };
 
-const updateHistogram = (selectedFilter, data) => { //lol this doesnt match the book, which uses filterId isntead of selectedFilter
+const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the book, which uses filterId isntead of selectedFilter
   
-  // Update the histogram here
+  // Update the treemap here
   const updatedData = selectedFilter === "all" ? data                                                       
     : data.filter(respondent => respondent.gender                 
         === selectedFilter);                  //filter the data to make sure respodent gender matches selected filter            
 
   const updatedBins = binGenerator(updatedData);                  
 
-  const histogramRect = select("#histogram rect")
+  const treemapRects = select("#treemap rect")
   
-  histogramRect                               
+  treemapRects                               
     .data(updatedBins)                                           
     .transition()
       .duration(500)

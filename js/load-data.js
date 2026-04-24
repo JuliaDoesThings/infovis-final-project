@@ -1,4 +1,4 @@
-export const loadData = () => {
+export const loadTestData = () => {
   
   // Load data into the project
   const csvData = require("../data/flat_data.csv"); // We need to use require to tell Parcel that flat_data.csv is an external, required file, and it needs to be includes in the dist/ folder.
@@ -41,12 +41,14 @@ const formatData = (data) => {
 }
 
 
-/*
+//load the student_data json = issue: not correctly generating x1, x0 and so forth
+
 export const loadJSONData = () => {
     const jsonData = require("../data/Student_Data.json");
     return jsonData;
 }
-
+/*
+//convert Compiled_Student_Data into a json 
 const formatToJSON = (unformattedData) => {
     let compliedData = {
         "name": "Programs by Race",

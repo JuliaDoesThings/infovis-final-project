@@ -28,64 +28,13 @@
 		<div class="source">
 			<h3>Data source</h3>
 			<p>Data collected by redistricting projects ahead of the 2024 school district redraws of the district at hand.</p>
-			<p>Treemap transitions inspired by: https://observablehq.com/notebook-kit/ex/d3/animated-treemap</p>
+			<p>Treemap transitions inspired by: https://observablehq.com/notebook-kit/ex/d3/animated-treemap.<br>
+			Some code inspired by: https://gist.github.com/ganezasan/52fced34d2182483995f0ca3960fe228
+			and https://strongriley.github.io/d3/ex/treemap.html.</p>
 		</div>
 
-
-
-
-
-
-	<br>
-	<br>
-	<br>
-	<!--for some reason??? deleting the code below BREAKS the treemap-->
-	<section>
-			<h2>why can i not delete you</h2>
-			<div class="legend">
-				<div class="row">
-					<div class="col col-6">
-						<h3>Language families</h3>
-						<div id="legend-families"></div>
-					</div>
-					<div class="col col-4">
-						<h3>Total number of speakers</h3>
-						<div id="legend-speakers"></div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div class="row">
-					<div class="col col-9">
-						<div id="circle-pack"></div>
-					</div>
-					<div class="col col-3">
-						<div id="info-container">
-							<div id="instructions">Pass your mouse over a language to reveal additional information.</div>
-							<div id="info" class="hidden">
-								<div class="info-language"></div>
-								<div class="info-branch">
-									<span class="label">Branch: </span>
-									<span class="information"></span>
-								</div>
-								<div class="info-family">
-									<span class="label">Family: </span>
-									<span class="information"></span>
-								</div>
-								<div class="info-total-speakers">
-									<span class="label">Total speakers: </span>
-									<span class="information"></span>
-								</div>
-								<div class="info-native-speakers">
-									<span class="label">Native speakers: </span>
-									<span class="information"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+	<!--for some reason??? deleting the code below BREAKS the treemap. issue inherited from the lab-->
+	<div id="circle-pack" class="disappear"></div>
 
 	<script type="module" src="./js/main.js"></script>
 </body>

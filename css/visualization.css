@@ -15,23 +15,9 @@
   text-align: center;
 }
 
-/* Legend */
-#legend-families ul {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
-}
-#legend-families li {
-  display: flex;
-  margin: 5px 10px;
-}
-.legend-color {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  border-radius: 50%;
+.disappear
+{
+  display: none;
 }
 
 /* Interactions */
@@ -101,7 +87,7 @@
 }
 .filter:hover,
 .filter.active {
-  background-color: rgba(48, 82, 82, 1);
+  background-color: rgb(1, 133, 133);
   transition-timing-function: ease-out;
 }
 .filter.active {
