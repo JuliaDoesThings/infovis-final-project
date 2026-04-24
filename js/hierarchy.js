@@ -14,10 +14,12 @@ export const CSVToHierarchy = (data) => {
   console.log("leaves", leaves);
 
   return [root, descendants, leaves];
-}
+
+};
 
 export const JSONToHierarchy = (data) => {
-const root = hierarchy(data);
+
+  const root = hierarchy(data);
   console.log("root", root);
 
   const descendants = root.descendants();
@@ -26,4 +28,5 @@ const root = hierarchy(data);
   console.log("leaves", leaves);
 
   return [root, descendants, leaves];
-}
+
+};
