@@ -1,8 +1,14 @@
-import { scaleRadial, scaleOrdinal, scaleLinear } from "d3-scale";
-import { programs } from "./helper";
+import { scaleOrdinal, scaleRadial } from "d3-scale";
+import { languageFamilies } from "./helper";
 
-
-//colorScale
 export const colorScale = scaleOrdinal()
-  .domain(programs.map(h => h.program))
-  .range(programs.map(h => h.color));
+  .domain(languageFamilies.map(d => d.label))
+  .range(languageFamilies.map(d => d.color));
+
+export const getRadius = (maxSpeakers, speakers) => {
+  const radialScale = scaleRadial()
+    .domain([0, maxSpeakers])
+    .range([0, 83]);
+
+  return radialScale(speakers);
+};
