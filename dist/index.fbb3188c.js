@@ -560,7 +560,6 @@ function hmrAccept(bundle, id) {
 var _loadDataJs = require("./load-data.js");
 var _hierarchyJs = require("./hierarchy.js");
 var _circlePackJs = require("./circle-pack.js");
-var _legendJs = require("./legend.js");
 var _treemapJs = require("./treemap.js");
 var _interactionsJs = require("./interactions.js");
 // Load and format the hierarchical data
@@ -569,14 +568,10 @@ const [root, descendants, leaves] = (0, _hierarchyJs.CSVToHierarchy)(flatData);
 (0, _interactionsJs.populateFilters)(flatData);
 // Draw the circle pack
 (0, _circlePackJs.drawCirclePack)(root, descendants, leaves);
-// Draw the tree chart
-//drawTree(root, descendants, leaves);
-// Create legend
-//createLegend();
 // Draw the treemap
 (0, _treemapJs.drawTreemap)(root, leaves);
 
-},{"./load-data.js":"bJWfj","./hierarchy.js":"k5lNf","./legend.js":"iN41n","./treemap.js":"g4qOy","./circle-pack.js":"3QqrX","./interactions.js":"kEhbs"}],"bJWfj":[function(require,module,exports) {
+},{"./load-data.js":"bJWfj","./hierarchy.js":"k5lNf","./treemap.js":"g4qOy","./circle-pack.js":"3QqrX","./interactions.js":"kEhbs"}],"bJWfj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadData", ()=>loadData);
@@ -1772,41 +1767,40 @@ exports.default = function custom(ratio) {
     return resquarify;
 }((0, _squarifyJs.phi));
 
-},{"./dice.js":"k7Rgs","./slice.js":"iVdqy","./squarify.js":"k9MP1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iN41n":[function(require,module,exports) {
+},{"./dice.js":"k7Rgs","./slice.js":"iVdqy","./squarify.js":"k9MP1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g4qOy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createLegend", ()=>createLegend);
+parcelHelpers.export(exports, "drawTreemap", ()=>drawTreemap);
+var _d3Hierarchy = require("d3-hierarchy");
 var _d3Selection = require("d3-selection");
-var _d3Format = require("d3-format");
-var _helper = require("./helper");
 var _scales = require("./scales");
-const createLegend = ()=>{
-    const legendFamilies = (0, _d3Selection.select)("#legend-families").append("ul").selectAll(".legend-family").data((0, _helper.languageFamilies)).join("li");
-    legendFamilies.append("span").attr("class", "legend-color").style("background-color", (d)=>(0, _scales.colorScale)(d.label));
-    legendFamilies.append("span").attr("class", "legend-label").text((d)=>d.label);
-    const speakersMax = 1000000000;
-    const speakersMedium = 100000000;
-    const speakersMin = 10000000;
-    const maxRadius = (0, _scales.getRadius)(speakersMax, speakersMax);
-    const mediumRadius = (0, _scales.getRadius)(speakersMax, speakersMedium);
-    const minRadius = (0, _scales.getRadius)(speakersMax, speakersMin);
-    const legendSpeakers = (0, _d3Selection.select)("#legend-speakers").append("svg").attr("width", 260).attr("height", 200).append("g").attr("transform", "translate(1, 10)");
-    const legendCircles = legendSpeakers.append("g").attr("fill", "transparent").attr("stroke", "#272626");
-    legendCircles.append("circle").attr("cx", maxRadius).attr("cy", maxRadius).attr("r", maxRadius);
-    legendCircles.append("circle").attr("cx", maxRadius).attr("cy", 2 * maxRadius - mediumRadius).attr("r", mediumRadius);
-    legendCircles.append("circle").attr("cx", maxRadius).attr("cy", 2 * maxRadius - minRadius).attr("r", minRadius);
-    const linesLength = 100;
-    const legendLines = legendSpeakers.append("g").attr("stroke", "#272626").attr("stroke-dasharray", "6 4");
-    legendLines.append("line").attr("x1", maxRadius).attr("y1", 0).attr("x2", maxRadius + linesLength).attr("y2", 0);
-    legendLines.append("line").attr("x1", maxRadius).attr("y1", 2 * maxRadius - 2 * mediumRadius).attr("x2", maxRadius + linesLength).attr("y2", 2 * maxRadius - 2 * mediumRadius);
-    legendLines.append("line").attr("x1", maxRadius).attr("y1", 2 * maxRadius - 2 * minRadius).attr("x2", maxRadius + linesLength).attr("y2", 2 * maxRadius - 2 * minRadius);
-    const labels = legendSpeakers.append("g").attr("fill", "#272626").attr("dominant-baseline", "middle");
-    labels.append("text").attr("x", maxRadius + linesLength + 5).attr("y", 0).text((0, _d3Format.format)(".1s")(speakersMax));
-    labels.append("text").attr("x", maxRadius + linesLength + 5).attr("y", 2 * maxRadius - 2 * mediumRadius).text((0, _d3Format.format)(".1s")(speakersMedium));
-    labels.append("text").attr("x", maxRadius + linesLength + 5).attr("y", 2 * maxRadius - 2 * minRadius).text((0, _d3Format.format)(".1s")(speakersMin));
+const drawTreemap = (root, leaves)=>{
+    // Dimensions
+    const width = 850;
+    const height = 600;
+    // Compute the layout
+    const treemapLayoutGenerator = (0, _d3Hierarchy.treemap)().size([
+        width,
+        height
+    ]).tile((0, _d3Hierarchy.treemapResquarify)).paddingInner(1).paddingOuter(1).round(true);
+    treemapLayoutGenerator(root);
+    // Append svg container
+    const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
+    // Append a group for each leaf
+    const nodes = svg.selectAll(".node-container").data(leaves).join("g").attr("class", "node-container").attr("transform", (d)=>`translate(${d.x0}, ${d.y0})`);
+    // Append a rectangle for each leaf 
+    nodes.append("rect").attr("class", "treemap-node").attr("x", 0).attr("y", 0).attr("width", (d)=>d.x1 - d.x0).attr("height", (d)=>d.y1 - d.y0).attr("rx", 3).attr("ry", 3).attr("fill", (d)=>(0, _scales.colorScale)(d.parent.data.parent));
+    // Append a label for each leaf
+    nodes.append("text").attr("class", (d)=>`treemap-label treemap-label-${d.id.replaceAll(" ", "-").replaceAll("'", "")}`).attr("x", 5).attr("y", 15).attr("fill", "white").style("font-size", "12px").style("font-weight", 500).text((d)=>d.id);
+    // Hide the labels that are larger than their parent
+    (0, _d3Selection.selectAll)(".treemap-label").style("opacity", (d)=>{
+        const textElement = document.querySelector(`.treemap-label-${d.id.replaceAll(" ", "-").replaceAll("'", "")}`);
+        const textWidth = textElement.getBBox().width;
+        return d.y1 - d.y0 >= 25 && d.x1 - d.x0 >= textWidth + 10 ? 1 : 0;
+    });
 };
 
-},{"d3-selection":"gn9gd","d3-format":"4XOv2","./helper":"6fitd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gn9gd":[function(require,module,exports) {
+},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gn9gd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "create", ()=>(0, _createJsDefault.default));
@@ -2866,459 +2860,7 @@ exports.default = function(selector) {
     ], (0, _indexJs.root));
 };
 
-},{"./array.js":"9WejU","./selection/index.js":"fK3Dl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4XOv2":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "formatDefaultLocale", ()=>(0, _defaultLocaleJsDefault.default));
-parcelHelpers.export(exports, "format", ()=>(0, _defaultLocaleJs.format));
-parcelHelpers.export(exports, "formatPrefix", ()=>(0, _defaultLocaleJs.formatPrefix));
-parcelHelpers.export(exports, "formatLocale", ()=>(0, _localeJsDefault.default));
-parcelHelpers.export(exports, "formatSpecifier", ()=>(0, _formatSpecifierJsDefault.default));
-parcelHelpers.export(exports, "FormatSpecifier", ()=>(0, _formatSpecifierJs.FormatSpecifier));
-parcelHelpers.export(exports, "precisionFixed", ()=>(0, _precisionFixedJsDefault.default));
-parcelHelpers.export(exports, "precisionPrefix", ()=>(0, _precisionPrefixJsDefault.default));
-parcelHelpers.export(exports, "precisionRound", ()=>(0, _precisionRoundJsDefault.default));
-var _defaultLocaleJs = require("./defaultLocale.js");
-var _defaultLocaleJsDefault = parcelHelpers.interopDefault(_defaultLocaleJs);
-var _localeJs = require("./locale.js");
-var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
-var _formatSpecifierJs = require("./formatSpecifier.js");
-var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
-var _precisionFixedJs = require("./precisionFixed.js");
-var _precisionFixedJsDefault = parcelHelpers.interopDefault(_precisionFixedJs);
-var _precisionPrefixJs = require("./precisionPrefix.js");
-var _precisionPrefixJsDefault = parcelHelpers.interopDefault(_precisionPrefixJs);
-var _precisionRoundJs = require("./precisionRound.js");
-var _precisionRoundJsDefault = parcelHelpers.interopDefault(_precisionRoundJs);
-
-},{"./defaultLocale.js":"g4Ai7","./locale.js":false,"./formatSpecifier.js":"4gfsY","./precisionFixed.js":"kCBOH","./precisionPrefix.js":"anfJX","./precisionRound.js":"djznD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g4Ai7":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "format", ()=>format);
-parcelHelpers.export(exports, "formatPrefix", ()=>formatPrefix);
-var _localeJs = require("./locale.js");
-var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
-var locale;
-var format;
-var formatPrefix;
-defaultLocale({
-    thousands: ",",
-    grouping: [
-        3
-    ],
-    currency: [
-        "$",
-        ""
-    ]
-});
-function defaultLocale(definition) {
-    locale = (0, _localeJsDefault.default)(definition);
-    format = locale.format;
-    formatPrefix = locale.formatPrefix;
-    return locale;
-}
-exports.default = defaultLocale;
-
-},{"./locale.js":"8sic5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8sic5":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _exponentJs = require("./exponent.js");
-var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
-var _formatGroupJs = require("./formatGroup.js");
-var _formatGroupJsDefault = parcelHelpers.interopDefault(_formatGroupJs);
-var _formatNumeralsJs = require("./formatNumerals.js");
-var _formatNumeralsJsDefault = parcelHelpers.interopDefault(_formatNumeralsJs);
-var _formatSpecifierJs = require("./formatSpecifier.js");
-var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
-var _formatTrimJs = require("./formatTrim.js");
-var _formatTrimJsDefault = parcelHelpers.interopDefault(_formatTrimJs);
-var _formatTypesJs = require("./formatTypes.js");
-var _formatTypesJsDefault = parcelHelpers.interopDefault(_formatTypesJs);
-var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
-var _identityJs = require("./identity.js");
-var _identityJsDefault = parcelHelpers.interopDefault(_identityJs);
-var map = Array.prototype.map, prefixes = [
-    "y",
-    "z",
-    "a",
-    "f",
-    "p",
-    "n",
-    "\xb5",
-    "m",
-    "",
-    "k",
-    "M",
-    "G",
-    "T",
-    "P",
-    "E",
-    "Z",
-    "Y"
-];
-exports.default = function(locale) {
-    var group = locale.grouping === undefined || locale.thousands === undefined ? (0, _identityJsDefault.default) : (0, _formatGroupJsDefault.default)(map.call(locale.grouping, Number), locale.thousands + ""), currencyPrefix = locale.currency === undefined ? "" : locale.currency[0] + "", currencySuffix = locale.currency === undefined ? "" : locale.currency[1] + "", decimal = locale.decimal === undefined ? "." : locale.decimal + "", numerals = locale.numerals === undefined ? (0, _identityJsDefault.default) : (0, _formatNumeralsJsDefault.default)(map.call(locale.numerals, String)), percent = locale.percent === undefined ? "%" : locale.percent + "", minus = locale.minus === undefined ? "−" : locale.minus + "", nan = locale.nan === undefined ? "NaN" : locale.nan + "";
-    function newFormat(specifier) {
-        specifier = (0, _formatSpecifierJsDefault.default)(specifier);
-        var fill = specifier.fill, align = specifier.align, sign = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
-        // The "n" type is an alias for ",g".
-        if (type === "n") comma = true, type = "g";
-        else if (!(0, _formatTypesJsDefault.default)[type]) precision === undefined && (precision = 12), trim = true, type = "g";
-        // If zero fill is specified, padding goes after sign and before digits.
-        if (zero || fill === "0" && align === "=") zero = true, fill = "0", align = "=";
-        // Compute the prefix and suffix.
-        // For SI-prefix, the suffix is lazily computed.
-        var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
-        // What format function should we use?
-        // Is this an integer type?
-        // Can this type generate exponential notation?
-        var formatType = (0, _formatTypesJsDefault.default)[type], maybeSuffix = /[defgprs%]/.test(type);
-        // Set the default precision if not specified,
-        // or clamp the specified precision to the supported range.
-        // For significant precision, it must be in [1, 21].
-        // For fixed precision, it must be in [0, 20].
-        precision = precision === undefined ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
-        function format(value) {
-            var valuePrefix = prefix, valueSuffix = suffix, i, n, c;
-            if (type === "c") {
-                valueSuffix = formatType(value) + valueSuffix;
-                value = "";
-            } else {
-                value = +value;
-                // Determine the sign. -0 is not less than 0, but 1 / -0 is!
-                var valueNegative = value < 0 || 1 / value < 0;
-                // Perform the initial formatting.
-                value = isNaN(value) ? nan : formatType(Math.abs(value), precision);
-                // Trim insignificant zeros.
-                if (trim) value = (0, _formatTrimJsDefault.default)(value);
-                // If a negative value rounds to zero after formatting, and no explicit positive sign is requested, hide the sign.
-                if (valueNegative && +value === 0 && sign !== "+") valueNegative = false;
-                // Compute the prefix and suffix.
-                valuePrefix = (valueNegative ? sign === "(" ? sign : minus : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
-                valueSuffix = (type === "s" ? prefixes[8 + (0, _formatPrefixAutoJs.prefixExponent) / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
-                // Break the formatted value into the integer “value” part that can be
-                // grouped, and fractional or exponential “suffix” part that is not.
-                if (maybeSuffix) {
-                    i = -1, n = value.length;
-                    while(++i < n)if (c = value.charCodeAt(i), 48 > c || c > 57) {
-                        valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
-                        value = value.slice(0, i);
-                        break;
-                    }
-                }
-            }
-            // If the fill character is not "0", grouping is applied before padding.
-            if (comma && !zero) value = group(value, Infinity);
-            // Compute the padding.
-            var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
-            // If the fill character is "0", grouping is applied after padding.
-            if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
-            // Reconstruct the final output based on the desired alignment.
-            switch(align){
-                case "<":
-                    value = valuePrefix + value + valueSuffix + padding;
-                    break;
-                case "=":
-                    value = valuePrefix + padding + value + valueSuffix;
-                    break;
-                case "^":
-                    value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length);
-                    break;
-                default:
-                    value = padding + valuePrefix + value + valueSuffix;
-                    break;
-            }
-            return numerals(value);
-        }
-        format.toString = function() {
-            return specifier + "";
-        };
-        return format;
-    }
-    function formatPrefix(specifier, value) {
-        var f = newFormat((specifier = (0, _formatSpecifierJsDefault.default)(specifier), specifier.type = "f", specifier)), e = Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3, k = Math.pow(10, -e), prefix = prefixes[8 + e / 3];
-        return function(value) {
-            return f(k * value) + prefix;
-        };
-    }
-    return {
-        format: newFormat,
-        formatPrefix: formatPrefix
-    };
-};
-
-},{"./exponent.js":"7L05r","./formatGroup.js":"97wNI","./formatNumerals.js":"bnEku","./formatSpecifier.js":"4gfsY","./formatTrim.js":"cGiOx","./formatTypes.js":"aVp9c","./formatPrefixAuto.js":"lOwtK","./identity.js":"9nHXj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7L05r":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _formatDecimalJs = require("./formatDecimal.js");
-exports.default = function(x) {
-    return x = (0, _formatDecimalJs.formatDecimalParts)(Math.abs(x)), x ? x[1] : NaN;
-};
-
-},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fkS16":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// Computes the decimal coefficient and exponent of the specified number x with
-// significant digits p, where x is positive and p is in [1, 21] or undefined.
-// For example, formatDecimalParts(1.23) returns ["123", 0].
-parcelHelpers.export(exports, "formatDecimalParts", ()=>formatDecimalParts);
-exports.default = function(x) {
-    return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
-};
-function formatDecimalParts(x, p) {
-    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null; // NaN, ±Infinity
-    var i, coefficient = x.slice(0, i);
-    // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
-    // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
-    return [
-        coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
-        +x.slice(i + 1)
-    ];
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"97wNI":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = function(grouping, thousands) {
-    return function(value, width) {
-        var i = value.length, t = [], j = 0, g = grouping[0], length = 0;
-        while(i > 0 && g > 0){
-            if (length + g + 1 > width) g = Math.max(1, width - length);
-            t.push(value.substring(i -= g, i + g));
-            if ((length += g + 1) > width) break;
-            g = grouping[j = (j + 1) % grouping.length];
-        }
-        return t.reverse().join(thousands);
-    };
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bnEku":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = function(numerals) {
-    return function(value) {
-        return value.replace(/[0-9]/g, function(i) {
-            return numerals[+i];
-        });
-    };
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4gfsY":[function(require,module,exports) {
-// [[fill]align][sign][symbol][0][width][,][.precision][~][type]
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "FormatSpecifier", ()=>FormatSpecifier);
-var re = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
-function formatSpecifier(specifier) {
-    if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
-    var match;
-    return new FormatSpecifier({
-        fill: match[1],
-        align: match[2],
-        sign: match[3],
-        symbol: match[4],
-        zero: match[5],
-        width: match[6],
-        comma: match[7],
-        precision: match[8] && match[8].slice(1),
-        trim: match[9],
-        type: match[10]
-    });
-}
-exports.default = formatSpecifier;
-formatSpecifier.prototype = FormatSpecifier.prototype; // instanceof
-function FormatSpecifier(specifier) {
-    this.fill = specifier.fill === undefined ? " " : specifier.fill + "";
-    this.align = specifier.align === undefined ? ">" : specifier.align + "";
-    this.sign = specifier.sign === undefined ? "-" : specifier.sign + "";
-    this.symbol = specifier.symbol === undefined ? "" : specifier.symbol + "";
-    this.zero = !!specifier.zero;
-    this.width = specifier.width === undefined ? undefined : +specifier.width;
-    this.comma = !!specifier.comma;
-    this.precision = specifier.precision === undefined ? undefined : +specifier.precision;
-    this.trim = !!specifier.trim;
-    this.type = specifier.type === undefined ? "" : specifier.type + "";
-}
-FormatSpecifier.prototype.toString = function() {
-    return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width === undefined ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision === undefined ? "" : "." + Math.max(0, this.precision | 0)) + (this.trim ? "~" : "") + this.type;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cGiOx":[function(require,module,exports) {
-// Trims insignificant zeros, e.g., replaces 1.2000k with 1.2k.
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = function(s) {
-    out: for(var n = s.length, i = 1, i0 = -1, i1; i < n; ++i)switch(s[i]){
-        case ".":
-            i0 = i1 = i;
-            break;
-        case "0":
-            if (i0 === 0) i0 = i;
-            i1 = i;
-            break;
-        default:
-            if (!+s[i]) break out;
-            if (i0 > 0) i0 = 0;
-            break;
-    }
-    return i0 > 0 ? s.slice(0, i0) + s.slice(i1 + 1) : s;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aVp9c":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _formatDecimalJs = require("./formatDecimal.js");
-var _formatDecimalJsDefault = parcelHelpers.interopDefault(_formatDecimalJs);
-var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
-var _formatPrefixAutoJsDefault = parcelHelpers.interopDefault(_formatPrefixAutoJs);
-var _formatRoundedJs = require("./formatRounded.js");
-var _formatRoundedJsDefault = parcelHelpers.interopDefault(_formatRoundedJs);
-exports.default = {
-    "%": (x, p)=>(x * 100).toFixed(p),
-    "b": (x)=>Math.round(x).toString(2),
-    "c": (x)=>x + "",
-    "d": (0, _formatDecimalJsDefault.default),
-    "e": (x, p)=>x.toExponential(p),
-    "f": (x, p)=>x.toFixed(p),
-    "g": (x, p)=>x.toPrecision(p),
-    "o": (x)=>Math.round(x).toString(8),
-    "p": (x, p)=>(0, _formatRoundedJsDefault.default)(x * 100, p),
-    "r": (0, _formatRoundedJsDefault.default),
-    "s": (0, _formatPrefixAutoJsDefault.default),
-    "X": (x)=>Math.round(x).toString(16).toUpperCase(),
-    "x": (x)=>Math.round(x).toString(16)
-};
-
-},{"./formatDecimal.js":"fkS16","./formatPrefixAuto.js":"lOwtK","./formatRounded.js":"gq71u","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lOwtK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "prefixExponent", ()=>prefixExponent);
-var _formatDecimalJs = require("./formatDecimal.js");
-var prefixExponent;
-exports.default = function(x, p) {
-    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
-    if (!d) return x + "";
-    var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
-    return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + (0, _formatDecimalJs.formatDecimalParts)(x, Math.max(0, p + i - 1))[0]; // less than 1y!
-};
-
-},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gq71u":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _formatDecimalJs = require("./formatDecimal.js");
-exports.default = function(x, p) {
-    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
-    if (!d) return x + "";
-    var coefficient = d[0], exponent = d[1];
-    return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
-};
-
-},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9nHXj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = function(x) {
-    return x;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kCBOH":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _exponentJs = require("./exponent.js");
-var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
-exports.default = function(step) {
-    return Math.max(0, -(0, _exponentJsDefault.default)(Math.abs(step)));
-};
-
-},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"anfJX":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _exponentJs = require("./exponent.js");
-var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
-exports.default = function(step, value) {
-    return Math.max(0, Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3 - (0, _exponentJsDefault.default)(Math.abs(step)));
-};
-
-},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"djznD":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _exponentJs = require("./exponent.js");
-var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
-exports.default = function(step, max) {
-    step = Math.abs(step), max = Math.abs(max) - step;
-    return Math.max(0, (0, _exponentJsDefault.default)(max) - (0, _exponentJsDefault.default)(step)) + 1;
-};
-
-},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6fitd":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "languageFamilies", ()=>languageFamilies);
-parcelHelpers.export(exports, "programs", ()=>programs);
-const languageFamilies = [
-    {
-        label: "Indo-European",
-        color: "#4E86A5"
-    },
-    {
-        label: "Sino-Tibetan",
-        color: "#9E4E9E"
-    },
-    {
-        label: "Afro-Asiatic",
-        color: "#59C8DC"
-    },
-    {
-        label: "Austronesian",
-        color: "#3E527B"
-    },
-    {
-        label: "Japanic",
-        color: "#F99E23"
-    },
-    {
-        label: "Niger-Congo",
-        color: "#F36F5E"
-    },
-    {
-        label: "Dravidian",
-        color: "#C33D54"
-    },
-    {
-        label: "Turkic",
-        color: "#D57AB1"
-    },
-    {
-        label: "Koreanic",
-        color: "#33936F"
-    },
-    {
-        label: "Kra-Dai",
-        color: "#36311F"
-    },
-    {
-        label: "Uralic",
-        color: "#B59930"
-    }
-];
-const programs = [
-    {
-        label: "Asian/Pacific Islander",
-        color: "#6be8a5"
-    },
-    {
-        label: "American Indian/Alaska Native/Hawaiian",
-        color: "#6bd3e8"
-    },
-    {
-        label: "White",
-        color: "#886be8"
-    },
-    {
-        label: "Black",
-        color: "#31347d"
-    }
-];
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9HEWY":[function(require,module,exports) {
+},{"./array.js":"9WejU","./selection/index.js":"fK3Dl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9HEWY":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "colorScale", ()=>colorScale);
@@ -5018,7 +4560,389 @@ function tickFormat(start, stop, count, specifier) {
 }
 exports.default = tickFormat;
 
-},{"d3-array":"1yX2W","d3-format":"4XOv2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hNjKg":[function(require,module,exports) {
+},{"d3-array":"1yX2W","d3-format":"4XOv2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4XOv2":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "formatDefaultLocale", ()=>(0, _defaultLocaleJsDefault.default));
+parcelHelpers.export(exports, "format", ()=>(0, _defaultLocaleJs.format));
+parcelHelpers.export(exports, "formatPrefix", ()=>(0, _defaultLocaleJs.formatPrefix));
+parcelHelpers.export(exports, "formatLocale", ()=>(0, _localeJsDefault.default));
+parcelHelpers.export(exports, "formatSpecifier", ()=>(0, _formatSpecifierJsDefault.default));
+parcelHelpers.export(exports, "FormatSpecifier", ()=>(0, _formatSpecifierJs.FormatSpecifier));
+parcelHelpers.export(exports, "precisionFixed", ()=>(0, _precisionFixedJsDefault.default));
+parcelHelpers.export(exports, "precisionPrefix", ()=>(0, _precisionPrefixJsDefault.default));
+parcelHelpers.export(exports, "precisionRound", ()=>(0, _precisionRoundJsDefault.default));
+var _defaultLocaleJs = require("./defaultLocale.js");
+var _defaultLocaleJsDefault = parcelHelpers.interopDefault(_defaultLocaleJs);
+var _localeJs = require("./locale.js");
+var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
+var _formatSpecifierJs = require("./formatSpecifier.js");
+var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
+var _precisionFixedJs = require("./precisionFixed.js");
+var _precisionFixedJsDefault = parcelHelpers.interopDefault(_precisionFixedJs);
+var _precisionPrefixJs = require("./precisionPrefix.js");
+var _precisionPrefixJsDefault = parcelHelpers.interopDefault(_precisionPrefixJs);
+var _precisionRoundJs = require("./precisionRound.js");
+var _precisionRoundJsDefault = parcelHelpers.interopDefault(_precisionRoundJs);
+
+},{"./defaultLocale.js":"g4Ai7","./locale.js":false,"./formatSpecifier.js":"4gfsY","./precisionFixed.js":"kCBOH","./precisionPrefix.js":"anfJX","./precisionRound.js":"djznD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g4Ai7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "format", ()=>format);
+parcelHelpers.export(exports, "formatPrefix", ()=>formatPrefix);
+var _localeJs = require("./locale.js");
+var _localeJsDefault = parcelHelpers.interopDefault(_localeJs);
+var locale;
+var format;
+var formatPrefix;
+defaultLocale({
+    thousands: ",",
+    grouping: [
+        3
+    ],
+    currency: [
+        "$",
+        ""
+    ]
+});
+function defaultLocale(definition) {
+    locale = (0, _localeJsDefault.default)(definition);
+    format = locale.format;
+    formatPrefix = locale.formatPrefix;
+    return locale;
+}
+exports.default = defaultLocale;
+
+},{"./locale.js":"8sic5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8sic5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+var _formatGroupJs = require("./formatGroup.js");
+var _formatGroupJsDefault = parcelHelpers.interopDefault(_formatGroupJs);
+var _formatNumeralsJs = require("./formatNumerals.js");
+var _formatNumeralsJsDefault = parcelHelpers.interopDefault(_formatNumeralsJs);
+var _formatSpecifierJs = require("./formatSpecifier.js");
+var _formatSpecifierJsDefault = parcelHelpers.interopDefault(_formatSpecifierJs);
+var _formatTrimJs = require("./formatTrim.js");
+var _formatTrimJsDefault = parcelHelpers.interopDefault(_formatTrimJs);
+var _formatTypesJs = require("./formatTypes.js");
+var _formatTypesJsDefault = parcelHelpers.interopDefault(_formatTypesJs);
+var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
+var _identityJs = require("./identity.js");
+var _identityJsDefault = parcelHelpers.interopDefault(_identityJs);
+var map = Array.prototype.map, prefixes = [
+    "y",
+    "z",
+    "a",
+    "f",
+    "p",
+    "n",
+    "\xb5",
+    "m",
+    "",
+    "k",
+    "M",
+    "G",
+    "T",
+    "P",
+    "E",
+    "Z",
+    "Y"
+];
+exports.default = function(locale) {
+    var group = locale.grouping === undefined || locale.thousands === undefined ? (0, _identityJsDefault.default) : (0, _formatGroupJsDefault.default)(map.call(locale.grouping, Number), locale.thousands + ""), currencyPrefix = locale.currency === undefined ? "" : locale.currency[0] + "", currencySuffix = locale.currency === undefined ? "" : locale.currency[1] + "", decimal = locale.decimal === undefined ? "." : locale.decimal + "", numerals = locale.numerals === undefined ? (0, _identityJsDefault.default) : (0, _formatNumeralsJsDefault.default)(map.call(locale.numerals, String)), percent = locale.percent === undefined ? "%" : locale.percent + "", minus = locale.minus === undefined ? "−" : locale.minus + "", nan = locale.nan === undefined ? "NaN" : locale.nan + "";
+    function newFormat(specifier) {
+        specifier = (0, _formatSpecifierJsDefault.default)(specifier);
+        var fill = specifier.fill, align = specifier.align, sign = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
+        // The "n" type is an alias for ",g".
+        if (type === "n") comma = true, type = "g";
+        else if (!(0, _formatTypesJsDefault.default)[type]) precision === undefined && (precision = 12), trim = true, type = "g";
+        // If zero fill is specified, padding goes after sign and before digits.
+        if (zero || fill === "0" && align === "=") zero = true, fill = "0", align = "=";
+        // Compute the prefix and suffix.
+        // For SI-prefix, the suffix is lazily computed.
+        var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
+        // What format function should we use?
+        // Is this an integer type?
+        // Can this type generate exponential notation?
+        var formatType = (0, _formatTypesJsDefault.default)[type], maybeSuffix = /[defgprs%]/.test(type);
+        // Set the default precision if not specified,
+        // or clamp the specified precision to the supported range.
+        // For significant precision, it must be in [1, 21].
+        // For fixed precision, it must be in [0, 20].
+        precision = precision === undefined ? 6 : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision)) : Math.max(0, Math.min(20, precision));
+        function format(value) {
+            var valuePrefix = prefix, valueSuffix = suffix, i, n, c;
+            if (type === "c") {
+                valueSuffix = formatType(value) + valueSuffix;
+                value = "";
+            } else {
+                value = +value;
+                // Determine the sign. -0 is not less than 0, but 1 / -0 is!
+                var valueNegative = value < 0 || 1 / value < 0;
+                // Perform the initial formatting.
+                value = isNaN(value) ? nan : formatType(Math.abs(value), precision);
+                // Trim insignificant zeros.
+                if (trim) value = (0, _formatTrimJsDefault.default)(value);
+                // If a negative value rounds to zero after formatting, and no explicit positive sign is requested, hide the sign.
+                if (valueNegative && +value === 0 && sign !== "+") valueNegative = false;
+                // Compute the prefix and suffix.
+                valuePrefix = (valueNegative ? sign === "(" ? sign : minus : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
+                valueSuffix = (type === "s" ? prefixes[8 + (0, _formatPrefixAutoJs.prefixExponent) / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
+                // Break the formatted value into the integer “value” part that can be
+                // grouped, and fractional or exponential “suffix” part that is not.
+                if (maybeSuffix) {
+                    i = -1, n = value.length;
+                    while(++i < n)if (c = value.charCodeAt(i), 48 > c || c > 57) {
+                        valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
+                        value = value.slice(0, i);
+                        break;
+                    }
+                }
+            }
+            // If the fill character is not "0", grouping is applied before padding.
+            if (comma && !zero) value = group(value, Infinity);
+            // Compute the padding.
+            var length = valuePrefix.length + value.length + valueSuffix.length, padding = length < width ? new Array(width - length + 1).join(fill) : "";
+            // If the fill character is "0", grouping is applied after padding.
+            if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+            // Reconstruct the final output based on the desired alignment.
+            switch(align){
+                case "<":
+                    value = valuePrefix + value + valueSuffix + padding;
+                    break;
+                case "=":
+                    value = valuePrefix + padding + value + valueSuffix;
+                    break;
+                case "^":
+                    value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length);
+                    break;
+                default:
+                    value = padding + valuePrefix + value + valueSuffix;
+                    break;
+            }
+            return numerals(value);
+        }
+        format.toString = function() {
+            return specifier + "";
+        };
+        return format;
+    }
+    function formatPrefix(specifier, value) {
+        var f = newFormat((specifier = (0, _formatSpecifierJsDefault.default)(specifier), specifier.type = "f", specifier)), e = Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3, k = Math.pow(10, -e), prefix = prefixes[8 + e / 3];
+        return function(value) {
+            return f(k * value) + prefix;
+        };
+    }
+    return {
+        format: newFormat,
+        formatPrefix: formatPrefix
+    };
+};
+
+},{"./exponent.js":"7L05r","./formatGroup.js":"97wNI","./formatNumerals.js":"bnEku","./formatSpecifier.js":"4gfsY","./formatTrim.js":"cGiOx","./formatTypes.js":"aVp9c","./formatPrefixAuto.js":"lOwtK","./identity.js":"9nHXj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7L05r":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+exports.default = function(x) {
+    return x = (0, _formatDecimalJs.formatDecimalParts)(Math.abs(x)), x ? x[1] : NaN;
+};
+
+},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fkS16":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// Computes the decimal coefficient and exponent of the specified number x with
+// significant digits p, where x is positive and p is in [1, 21] or undefined.
+// For example, formatDecimalParts(1.23) returns ["123", 0].
+parcelHelpers.export(exports, "formatDecimalParts", ()=>formatDecimalParts);
+exports.default = function(x) {
+    return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
+};
+function formatDecimalParts(x, p) {
+    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null; // NaN, ±Infinity
+    var i, coefficient = x.slice(0, i);
+    // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
+    // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
+    return [
+        coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
+        +x.slice(i + 1)
+    ];
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"97wNI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(grouping, thousands) {
+    return function(value, width) {
+        var i = value.length, t = [], j = 0, g = grouping[0], length = 0;
+        while(i > 0 && g > 0){
+            if (length + g + 1 > width) g = Math.max(1, width - length);
+            t.push(value.substring(i -= g, i + g));
+            if ((length += g + 1) > width) break;
+            g = grouping[j = (j + 1) % grouping.length];
+        }
+        return t.reverse().join(thousands);
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bnEku":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(numerals) {
+    return function(value) {
+        return value.replace(/[0-9]/g, function(i) {
+            return numerals[+i];
+        });
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4gfsY":[function(require,module,exports) {
+// [[fill]align][sign][symbol][0][width][,][.precision][~][type]
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FormatSpecifier", ()=>FormatSpecifier);
+var re = /^(?:(.)?([<>=^]))?([+\-( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?(~)?([a-z%])?$/i;
+function formatSpecifier(specifier) {
+    if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+    var match;
+    return new FormatSpecifier({
+        fill: match[1],
+        align: match[2],
+        sign: match[3],
+        symbol: match[4],
+        zero: match[5],
+        width: match[6],
+        comma: match[7],
+        precision: match[8] && match[8].slice(1),
+        trim: match[9],
+        type: match[10]
+    });
+}
+exports.default = formatSpecifier;
+formatSpecifier.prototype = FormatSpecifier.prototype; // instanceof
+function FormatSpecifier(specifier) {
+    this.fill = specifier.fill === undefined ? " " : specifier.fill + "";
+    this.align = specifier.align === undefined ? ">" : specifier.align + "";
+    this.sign = specifier.sign === undefined ? "-" : specifier.sign + "";
+    this.symbol = specifier.symbol === undefined ? "" : specifier.symbol + "";
+    this.zero = !!specifier.zero;
+    this.width = specifier.width === undefined ? undefined : +specifier.width;
+    this.comma = !!specifier.comma;
+    this.precision = specifier.precision === undefined ? undefined : +specifier.precision;
+    this.trim = !!specifier.trim;
+    this.type = specifier.type === undefined ? "" : specifier.type + "";
+}
+FormatSpecifier.prototype.toString = function() {
+    return this.fill + this.align + this.sign + this.symbol + (this.zero ? "0" : "") + (this.width === undefined ? "" : Math.max(1, this.width | 0)) + (this.comma ? "," : "") + (this.precision === undefined ? "" : "." + Math.max(0, this.precision | 0)) + (this.trim ? "~" : "") + this.type;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cGiOx":[function(require,module,exports) {
+// Trims insignificant zeros, e.g., replaces 1.2000k with 1.2k.
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(s) {
+    out: for(var n = s.length, i = 1, i0 = -1, i1; i < n; ++i)switch(s[i]){
+        case ".":
+            i0 = i1 = i;
+            break;
+        case "0":
+            if (i0 === 0) i0 = i;
+            i1 = i;
+            break;
+        default:
+            if (!+s[i]) break out;
+            if (i0 > 0) i0 = 0;
+            break;
+    }
+    return i0 > 0 ? s.slice(0, i0) + s.slice(i1 + 1) : s;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aVp9c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+var _formatDecimalJsDefault = parcelHelpers.interopDefault(_formatDecimalJs);
+var _formatPrefixAutoJs = require("./formatPrefixAuto.js");
+var _formatPrefixAutoJsDefault = parcelHelpers.interopDefault(_formatPrefixAutoJs);
+var _formatRoundedJs = require("./formatRounded.js");
+var _formatRoundedJsDefault = parcelHelpers.interopDefault(_formatRoundedJs);
+exports.default = {
+    "%": (x, p)=>(x * 100).toFixed(p),
+    "b": (x)=>Math.round(x).toString(2),
+    "c": (x)=>x + "",
+    "d": (0, _formatDecimalJsDefault.default),
+    "e": (x, p)=>x.toExponential(p),
+    "f": (x, p)=>x.toFixed(p),
+    "g": (x, p)=>x.toPrecision(p),
+    "o": (x)=>Math.round(x).toString(8),
+    "p": (x, p)=>(0, _formatRoundedJsDefault.default)(x * 100, p),
+    "r": (0, _formatRoundedJsDefault.default),
+    "s": (0, _formatPrefixAutoJsDefault.default),
+    "X": (x)=>Math.round(x).toString(16).toUpperCase(),
+    "x": (x)=>Math.round(x).toString(16)
+};
+
+},{"./formatDecimal.js":"fkS16","./formatPrefixAuto.js":"lOwtK","./formatRounded.js":"gq71u","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lOwtK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "prefixExponent", ()=>prefixExponent);
+var _formatDecimalJs = require("./formatDecimal.js");
+var prefixExponent;
+exports.default = function(x, p) {
+    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
+    return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + (0, _formatDecimalJs.formatDecimalParts)(x, Math.max(0, p + i - 1))[0]; // less than 1y!
+};
+
+},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gq71u":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _formatDecimalJs = require("./formatDecimal.js");
+exports.default = function(x, p) {
+    var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
+    if (!d) return x + "";
+    var coefficient = d[0], exponent = d[1];
+    return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1) : coefficient + new Array(exponent - coefficient.length + 2).join("0");
+};
+
+},{"./formatDecimal.js":"fkS16","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9nHXj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = function(x) {
+    return x;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kCBOH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step) {
+    return Math.max(0, -(0, _exponentJsDefault.default)(Math.abs(step)));
+};
+
+},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"anfJX":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step, value) {
+    return Math.max(0, Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3 - (0, _exponentJsDefault.default)(Math.abs(step)));
+};
+
+},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"djznD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _exponentJs = require("./exponent.js");
+var _exponentJsDefault = parcelHelpers.interopDefault(_exponentJs);
+exports.default = function(step, max) {
+    step = Math.abs(step), max = Math.abs(max) - step;
+    return Math.max(0, (0, _exponentJsDefault.default)(max) - (0, _exponentJsDefault.default)(step)) + 1;
+};
+
+},{"./exponent.js":"7L05r","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hNjKg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "implicit", ()=>implicit);
@@ -5111,40 +5035,77 @@ function radial() {
 }
 exports.default = radial;
 
-},{"./continuous.js":"1LsCM","./init.js":"kp8lc","./linear.js":"lob4K","./number.js":"k9Lyx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g4qOy":[function(require,module,exports) {
+},{"./continuous.js":"1LsCM","./init.js":"kp8lc","./linear.js":"lob4K","./number.js":"k9Lyx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6fitd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "drawTreemap", ()=>drawTreemap);
-var _d3Hierarchy = require("d3-hierarchy");
-var _d3Selection = require("d3-selection");
-var _scales = require("./scales");
-const drawTreemap = (root, leaves)=>{
-    // Dimensions
-    const width = 850;
-    const height = 600;
-    // Compute the layout
-    const treemapLayoutGenerator = (0, _d3Hierarchy.treemap)().size([
-        width,
-        height
-    ]).tile((0, _d3Hierarchy.treemapResquarify)).paddingInner(1).paddingOuter(1).round(true);
-    treemapLayoutGenerator(root);
-    // Append svg container
-    const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
-    // Append a group for each leaf
-    const nodes = svg.selectAll(".node-container").data(leaves).join("g").attr("class", "node-container").attr("transform", (d)=>`translate(${d.x0}, ${d.y0})`);
-    // Append a rectangle for each leaf 
-    nodes.append("rect").attr("class", "treemap-node").attr("x", 0).attr("y", 0).attr("width", (d)=>d.x1 - d.x0).attr("height", (d)=>d.y1 - d.y0).attr("rx", 3).attr("ry", 3).attr("fill", (d)=>(0, _scales.colorScale)(d.parent.data.parent));
-    // Append a label for each leaf
-    nodes.append("text").attr("class", (d)=>`treemap-label treemap-label-${d.id.replaceAll(" ", "-").replaceAll("'", "")}`).attr("x", 5).attr("y", 15).attr("fill", "white").style("font-size", "12px").style("font-weight", 500).text((d)=>d.id);
-    // Hide the labels that are larger than their parent
-    (0, _d3Selection.selectAll)(".treemap-label").style("opacity", (d)=>{
-        const textElement = document.querySelector(`.treemap-label-${d.id.replaceAll(" ", "-").replaceAll("'", "")}`);
-        const textWidth = textElement.getBBox().width;
-        return d.y1 - d.y0 >= 25 && d.x1 - d.x0 >= textWidth + 10 ? 1 : 0;
-    });
-};
+parcelHelpers.export(exports, "languageFamilies", ()=>languageFamilies);
+parcelHelpers.export(exports, "programs", ()=>programs);
+const languageFamilies = [
+    {
+        label: "Indo-European",
+        color: "#4E86A5"
+    },
+    {
+        label: "Sino-Tibetan",
+        color: "#9E4E9E"
+    },
+    {
+        label: "Afro-Asiatic",
+        color: "#59C8DC"
+    },
+    {
+        label: "Austronesian",
+        color: "#3E527B"
+    },
+    {
+        label: "Japanic",
+        color: "#F99E23"
+    },
+    {
+        label: "Niger-Congo",
+        color: "#F36F5E"
+    },
+    {
+        label: "Dravidian",
+        color: "#C33D54"
+    },
+    {
+        label: "Turkic",
+        color: "#D57AB1"
+    },
+    {
+        label: "Koreanic",
+        color: "#33936F"
+    },
+    {
+        label: "Kra-Dai",
+        color: "#36311F"
+    },
+    {
+        label: "Uralic",
+        color: "#B59930"
+    }
+];
+const programs = [
+    {
+        label: "Asian/Pacific Islander",
+        color: "#6be8a5"
+    },
+    {
+        label: "American Indian/Alaska Native/Hawaiian",
+        color: "#6bd3e8"
+    },
+    {
+        label: "White",
+        color: "#886be8"
+    },
+    {
+        label: "Black",
+        color: "#31347d"
+    }
+];
 
-},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "drawCirclePack", ()=>drawCirclePack);
