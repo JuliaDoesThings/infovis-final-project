@@ -22,6 +22,9 @@ export const loadRealData = () => {
     // const jsonData = JSON.stringify(unformattedData);
 
     console.log("csvData", unformattedData);
+    unformattedData.forEach(d => {
+        d.enrolled = +d.total_speakers;
+    })
     const formattedData = formatData(unformattedData);
 
 

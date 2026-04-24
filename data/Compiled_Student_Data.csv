@@ -1,9 +1,9 @@
 ﻿child,parent,enrolled
-Enrollment by Race,,0
-White,Enrollment by Race,0
-Black,Enrollment by Race,0
-American Indian/Alaska Native/Hawaiian,Enrollment by Race,0
-Asian/Pacific Islander,Enrollment by Race,0
+Enrollment by Race,,,
+White,Enrollment by Race,,
+Black,Enrollment by Race,,
+American Indian/Alaska Native/Hawaiian,Enrollment by Race,,
+Asian/Pacific Islander,Enrollment by Race,,
 TK,White,844
 Armed Forces Family,White,551
 Structed English Immersion Program or similar,White,2200

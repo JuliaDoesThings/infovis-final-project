@@ -8,8 +8,15 @@ import { populateFilters } from "./interactions.js";
 const flatData = loadTestData();
 const [root, descendants, leaves] = CSVToHierarchy(flatData);
 
-const jsonData = loadJSONData();
-const [jroot, jdescendants, jleaves] = JSONToHierarchy(jsonData)
+const realData = loadRealData()
+const [rroot, rdescendants, rleaves] = loadRealData();
+
+drawCirclePack(rroot, rdescendants, rleaves);
+
+drawTreemap(rroot, rleaves);
+
+//const jsonData = loadJSONData();
+//const [jroot, jdescendants, jleaves] = JSONToHierarchy(jsonData)
 //drawCirclePack (jroot, jdescendants, jleaves);
 //drawTreemap(jroot, jleaves);
 
