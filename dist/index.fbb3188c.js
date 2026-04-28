@@ -1797,7 +1797,9 @@ var _d3Scale = require("d3-scale");
 var _d3Ease = require("d3-ease");
 var _d3Transition = require("d3-transition");
 var _hierarchy = require("./hierarchy");
+var _d3Dsv = require("d3-dsv");
 const drawTreemap = (root, leaves)=>{
+    console.log("attempting draw");
     // Dimensions
     const width = 850;
     const height = 600;
@@ -1852,7 +1854,24 @@ const testingPopulateFilters = (data)=>{
 const updateTreemap = (selectedFilter, data)=>{
     console.log("selectedFilter", selectedFilter);
     //console.log("test print data", data);
-    let newData = [];
+    //test hardcoding for a moment - this runs into the same issue. exercise in futility.
+    /*
+  if (selectedFilter == "Romance") {
+    const romance_data = require("../data/romance_data.csv");
+    console.log("romance_data", romance_data);
+
+    // Format numbers
+    romance_data.forEach(d => {
+      d.total_speakers = +d.total_speakers;
+      d.native_speakers = +d.native_speakers;
+    });
+
+    const [new_root, new_descendants, new_leaves] = CSVToHierarchy(romance_data);
+    console.log("new_root", new_root);
+    console.log("new_leaves", new_leaves);
+    drawTreemap(new_root, new_leaves);
+  }
+  */ let newData = [];
     newData.push({
         "child": `${selectedFilter}`,
         "parent": "",
@@ -1866,10 +1885,14 @@ const updateTreemap = (selectedFilter, data)=>{
     console.log("newData", newData);
     // Update the treemap here
     const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.parent === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
-    const [new_root, new_descendants, new_leaves] = (0, _hierarchy.CSVToHierarchy)(newData);
+    //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
+    /*const csvFiltered = csvFormat(newData);
+  console.log(csvFiltered);
+  */ const [new_root, new_descendants, new_leaves] = (0, _hierarchy.CSVToHierarchy)(csvFiltered);
     console.log("new_root", new_root);
     console.log("new_leaves", new_leaves);
-    /*
+    drawTreemap(new_root, new_leaves);
+/*
   const hierarchyGenerator = stratify()
     .id(d => d.child)
     .parentId(d => d.parent);
@@ -1879,12 +1902,20 @@ const updateTreemap = (selectedFilter, data)=>{
   const newLeaves = newRoot.leaves()
   console.log("newLeaves", newLeaves);
   */ //console.log("updatedData", updatedData)
-    const bins = (0, _sharedConstants.binGenerator)(updatedData);
-    const xScale = (0, _d3Scale.scaleLinear)();
-    const yScale = (0, _d3Scale.scaleLinear)();
-    const treemapRects = (0, _d3Selection.selectAll)("#treemap rect");
-    treemapRects.data(bins).transition().duration(500).attr("y", (d)=>yScale(d.length)).attr("height", (d)=>innerHeight - yScale(d.length));
-};
+/*const bins = binGenerator(updatedData);          
+  const xScale = scaleLinear();
+  const yScale = scaleLinear();
+      
+
+  const treemapRects = selectAll("#treemap rect")
+  
+  treemapRects                               
+    .data(bins)                                           
+    .transition()
+      .duration(500)
+      .attr("y", d => yScale(d.length))
+      .attr("height", d => innerHeight - yScale(d.length));    
+      */ };
 const populateTestFilters = (data)=>{
     // Create the filters here
     const filters = (0, _d3Selection.select)("#filters");
@@ -1902,7 +1933,7 @@ const populateTestFilters = (data)=>{
     });
 };
 
-},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./shared-constants":"2wRDA","d3-scale":"UQ8g3","d3-ease":"8sCNl","d3-transition":"4lorl","./hierarchy":"k5lNf"}],"gn9gd":[function(require,module,exports) {
+},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./shared-constants":"2wRDA","d3-scale":"UQ8g3","d3-ease":"8sCNl","d3-transition":"4lorl","./hierarchy":"k5lNf","d3-dsv":"4Jb1j"}],"gn9gd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "create", ()=>(0, _createJsDefault.default));
@@ -4875,7 +4906,7 @@ var map = Array.prototype.map, prefixes = [
 ];
 exports.default = function(locale) {
     var group = locale.grouping === undefined || locale.thousands === undefined ? (0, _identityJsDefault.default) : (0, _formatGroupJsDefault.default)(map.call(locale.grouping, Number), locale.thousands + ""), currencyPrefix = locale.currency === undefined ? "" : locale.currency[0] + "", currencySuffix = locale.currency === undefined ? "" : locale.currency[1] + "", decimal = locale.decimal === undefined ? "." : locale.decimal + "", numerals = locale.numerals === undefined ? (0, _identityJsDefault.default) : (0, _formatNumeralsJsDefault.default)(map.call(locale.numerals, String)), percent = locale.percent === undefined ? "%" : locale.percent + "", minus = locale.minus === undefined ? "−" : locale.minus + "", nan = locale.nan === undefined ? "NaN" : locale.nan + "";
-    function newFormat(specifier) {
+    function newFormat(specifier, options) {
         specifier = (0, _formatSpecifierJsDefault.default)(specifier);
         var fill = specifier.fill, align = specifier.align, sign = specifier.sign, symbol = specifier.symbol, zero = specifier.zero, width = specifier.width, comma = specifier.comma, precision = specifier.precision, trim = specifier.trim, type = specifier.type;
         // The "n" type is an alias for ",g".
@@ -4885,7 +4916,7 @@ exports.default = function(locale) {
         if (zero || fill === "0" && align === "=") zero = true, fill = "0", align = "=";
         // Compute the prefix and suffix.
         // For SI-prefix, the suffix is lazily computed.
-        var prefix = symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "", suffix = symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "";
+        var prefix = (options && options.prefix !== undefined ? options.prefix : "") + (symbol === "$" ? currencyPrefix : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : ""), suffix = (symbol === "$" ? currencySuffix : /[%p]/.test(type) ? percent : "") + (options && options.suffix !== undefined ? options.suffix : "");
         // What format function should we use?
         // Is this an integer type?
         // Can this type generate exponential notation?
@@ -4912,7 +4943,7 @@ exports.default = function(locale) {
                 if (valueNegative && +value === 0 && sign !== "+") valueNegative = false;
                 // Compute the prefix and suffix.
                 valuePrefix = (valueNegative ? sign === "(" ? sign : minus : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
-                valueSuffix = (type === "s" ? prefixes[8 + (0, _formatPrefixAutoJs.prefixExponent) / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
+                valueSuffix = (type === "s" && !isNaN(value) && (0, _formatPrefixAutoJs.prefixExponent) !== undefined ? prefixes[8 + (0, _formatPrefixAutoJs.prefixExponent) / 3] : "") + valueSuffix + (valueNegative && sign === "(" ? ")" : "");
                 // Break the formatted value into the integer “value” part that can be
                 // grouped, and fractional or exponential “suffix” part that is not.
                 if (maybeSuffix) {
@@ -4953,9 +4984,11 @@ exports.default = function(locale) {
         return format;
     }
     function formatPrefix(specifier, value) {
-        var f = newFormat((specifier = (0, _formatSpecifierJsDefault.default)(specifier), specifier.type = "f", specifier)), e = Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3, k = Math.pow(10, -e), prefix = prefixes[8 + e / 3];
+        var e = Math.max(-8, Math.min(8, Math.floor((0, _exponentJsDefault.default)(value) / 3))) * 3, k = Math.pow(10, -e), f = newFormat((specifier = (0, _formatSpecifierJsDefault.default)(specifier), specifier.type = "f", specifier), {
+            suffix: prefixes[8 + e / 3]
+        });
         return function(value) {
-            return f(k * value) + prefix;
+            return f(k * value);
         };
     }
     return {
@@ -4983,8 +5016,8 @@ exports.default = function(x) {
     return Math.abs(x = Math.round(x)) >= 1e21 ? x.toLocaleString("en").replace(/,/g, "") : x.toString(10);
 };
 function formatDecimalParts(x, p) {
-    if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null; // NaN, ±Infinity
-    var i, coefficient = x.slice(0, i);
+    if (!isFinite(x) || x === 0) return null; // NaN, ±Infinity, ±0
+    var i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e"), coefficient = x.slice(0, i);
     // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
     // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
     return [
@@ -5114,7 +5147,7 @@ var _formatDecimalJs = require("./formatDecimal.js");
 var prefixExponent;
 exports.default = function(x, p) {
     var d = (0, _formatDecimalJs.formatDecimalParts)(x, p);
-    if (!d) return x + "";
+    if (!d) return prefixExponent = undefined, x.toPrecision(p);
     var coefficient = d[0], exponent = d[1], i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1, n = coefficient.length;
     return i === n ? coefficient : i > n ? coefficient + new Array(i - n + 1).join("0") : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i) : "0." + new Array(1 - i).join("0") + (0, _formatDecimalJs.formatDecimalParts)(x, Math.max(0, p + i - 1))[0]; // less than 1y!
 };
@@ -6547,7 +6580,175 @@ exports.default = function() {
     });
 };
 
-},{"./schedule.js":"de74c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
+},{"./schedule.js":"de74c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4Jb1j":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "dsvFormat", ()=>(0, _dsvJsDefault.default));
+parcelHelpers.export(exports, "csvParse", ()=>(0, _csvJs.csvParse));
+parcelHelpers.export(exports, "csvParseRows", ()=>(0, _csvJs.csvParseRows));
+parcelHelpers.export(exports, "csvFormat", ()=>(0, _csvJs.csvFormat));
+parcelHelpers.export(exports, "csvFormatBody", ()=>(0, _csvJs.csvFormatBody));
+parcelHelpers.export(exports, "csvFormatRows", ()=>(0, _csvJs.csvFormatRows));
+parcelHelpers.export(exports, "csvFormatRow", ()=>(0, _csvJs.csvFormatRow));
+parcelHelpers.export(exports, "csvFormatValue", ()=>(0, _csvJs.csvFormatValue));
+parcelHelpers.export(exports, "tsvParse", ()=>(0, _tsvJs.tsvParse));
+parcelHelpers.export(exports, "tsvParseRows", ()=>(0, _tsvJs.tsvParseRows));
+parcelHelpers.export(exports, "tsvFormat", ()=>(0, _tsvJs.tsvFormat));
+parcelHelpers.export(exports, "tsvFormatBody", ()=>(0, _tsvJs.tsvFormatBody));
+parcelHelpers.export(exports, "tsvFormatRows", ()=>(0, _tsvJs.tsvFormatRows));
+parcelHelpers.export(exports, "tsvFormatRow", ()=>(0, _tsvJs.tsvFormatRow));
+parcelHelpers.export(exports, "tsvFormatValue", ()=>(0, _tsvJs.tsvFormatValue));
+parcelHelpers.export(exports, "autoType", ()=>(0, _autoTypeJsDefault.default));
+var _dsvJs = require("./dsv.js");
+var _dsvJsDefault = parcelHelpers.interopDefault(_dsvJs);
+var _csvJs = require("./csv.js");
+var _tsvJs = require("./tsv.js");
+var _autoTypeJs = require("./autoType.js");
+var _autoTypeJsDefault = parcelHelpers.interopDefault(_autoTypeJs);
+
+},{"./dsv.js":false,"./csv.js":"ejKBg","./tsv.js":false,"./autoType.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"25KIW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var EOL = {}, EOF = {}, QUOTE = 34, NEWLINE = 10, RETURN = 13;
+function objectConverter(columns) {
+    return new Function("d", "return {" + columns.map(function(name, i) {
+        return JSON.stringify(name) + ": d[" + i + '] || ""';
+    }).join(",") + "}");
+}
+function customConverter(columns, f) {
+    var object = objectConverter(columns);
+    return function(row, i) {
+        return f(object(row), i, columns);
+    };
+}
+// Compute unique columns in order of discovery.
+function inferColumns(rows) {
+    var columnSet = Object.create(null), columns = [];
+    rows.forEach(function(row) {
+        for(var column in row)if (!(column in columnSet)) columns.push(columnSet[column] = column);
+    });
+    return columns;
+}
+function pad(value, width) {
+    var s = value + "", length = s.length;
+    return length < width ? new Array(width - length + 1).join(0) + s : s;
+}
+function formatYear(year) {
+    return year < 0 ? "-" + pad(-year, 6) : year > 9999 ? "+" + pad(year, 6) : pad(year, 4);
+}
+function formatDate(date) {
+    var hours = date.getUTCHours(), minutes = date.getUTCMinutes(), seconds = date.getUTCSeconds(), milliseconds = date.getUTCMilliseconds();
+    return isNaN(date) ? "Invalid Date" : formatYear(date.getUTCFullYear(), 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2) + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z" : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z" : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z" : "");
+}
+exports.default = function(delimiter) {
+    var reFormat = new RegExp('["' + delimiter + "\n\r]"), DELIMITER = delimiter.charCodeAt(0);
+    function parse(text, f) {
+        var convert, columns, rows = parseRows(text, function(row, i) {
+            if (convert) return convert(row, i - 1);
+            columns = row, convert = f ? customConverter(row, f) : objectConverter(row);
+        });
+        rows.columns = columns || [];
+        return rows;
+    }
+    function parseRows(text, f) {
+        var rows = [], N = text.length, I = 0, n = 0, t, eof = N <= 0, eol = false; // current token followed by EOL?
+        // Strip the trailing newline.
+        if (text.charCodeAt(N - 1) === NEWLINE) --N;
+        if (text.charCodeAt(N - 1) === RETURN) --N;
+        function token() {
+            if (eof) return EOF;
+            if (eol) return eol = false, EOL;
+            // Unescape quotes.
+            var i, j = I, c;
+            if (text.charCodeAt(j) === QUOTE) {
+                while(I++ < N && text.charCodeAt(I) !== QUOTE || text.charCodeAt(++I) === QUOTE);
+                if ((i = I) >= N) eof = true;
+                else if ((c = text.charCodeAt(I++)) === NEWLINE) eol = true;
+                else if (c === RETURN) {
+                    eol = true;
+                    if (text.charCodeAt(I) === NEWLINE) ++I;
+                }
+                return text.slice(j + 1, i - 1).replace(/""/g, '"');
+            }
+            // Find next delimiter or newline.
+            while(I < N){
+                if ((c = text.charCodeAt(i = I++)) === NEWLINE) eol = true;
+                else if (c === RETURN) {
+                    eol = true;
+                    if (text.charCodeAt(I) === NEWLINE) ++I;
+                } else if (c !== DELIMITER) continue;
+                return text.slice(j, i);
+            }
+            // Return last token before EOF.
+            return eof = true, text.slice(j, N);
+        }
+        while((t = token()) !== EOF){
+            var row = [];
+            while(t !== EOL && t !== EOF)row.push(t), t = token();
+            if (f && (row = f(row, n++)) == null) continue;
+            rows.push(row);
+        }
+        return rows;
+    }
+    function preformatBody(rows, columns) {
+        return rows.map(function(row) {
+            return columns.map(function(column) {
+                return formatValue(row[column]);
+            }).join(delimiter);
+        });
+    }
+    function format(rows, columns) {
+        if (columns == null) columns = inferColumns(rows);
+        return [
+            columns.map(formatValue).join(delimiter)
+        ].concat(preformatBody(rows, columns)).join("\n");
+    }
+    function formatBody(rows, columns) {
+        if (columns == null) columns = inferColumns(rows);
+        return preformatBody(rows, columns).join("\n");
+    }
+    function formatRows(rows) {
+        return rows.map(formatRow).join("\n");
+    }
+    function formatRow(row) {
+        return row.map(formatValue).join(delimiter);
+    }
+    function formatValue(value) {
+        return value == null ? "" : value instanceof Date ? formatDate(value) : reFormat.test(value += "") ? '"' + value.replace(/"/g, '""') + '"' : value;
+    }
+    return {
+        parse: parse,
+        parseRows: parseRows,
+        format: format,
+        formatBody: formatBody,
+        formatRows: formatRows,
+        formatRow: formatRow,
+        formatValue: formatValue
+    };
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ejKBg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "csvParse", ()=>csvParse);
+parcelHelpers.export(exports, "csvParseRows", ()=>csvParseRows);
+parcelHelpers.export(exports, "csvFormat", ()=>csvFormat);
+parcelHelpers.export(exports, "csvFormatBody", ()=>csvFormatBody);
+parcelHelpers.export(exports, "csvFormatRows", ()=>csvFormatRows);
+parcelHelpers.export(exports, "csvFormatRow", ()=>csvFormatRow);
+parcelHelpers.export(exports, "csvFormatValue", ()=>csvFormatValue);
+var _dsvJs = require("./dsv.js");
+var _dsvJsDefault = parcelHelpers.interopDefault(_dsvJs);
+var csv = (0, _dsvJsDefault.default)(",");
+var csvParse = csv.parse;
+var csvParseRows = csv.parseRows;
+var csvFormat = csv.format;
+var csvFormatBody = csv.formatBody;
+var csvFormatRows = csv.formatRows;
+var csvFormatRow = csv.formatRow;
+var csvFormatValue = csv.formatValue;
+
+},{"./dsv.js":"25KIW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "drawCirclePack", ()=>drawCirclePack);

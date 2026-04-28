@@ -6,8 +6,11 @@ import { scaleLinear } from "d3-scale";
 import { easeLinear } from "d3-ease";
 import { transition } from "d3-transition";
 import { CSVToHierarchy } from "./hierarchy";
+import { csvFormat } from "d3-dsv";
 
 export const drawTreemap = (root, leaves) => {
+  
+  console.log("attempting draw");
 
   // Dimensions
   const width = 850;
@@ -113,6 +116,24 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
   console.log("selectedFilter", selectedFilter)
   //console.log("test print data", data);
 
+  //test hardcoding for a moment - this runs into the same issue. exercise in futility.
+  /*
+  if (selectedFilter == "Romance") {
+    const romance_data = require("../data/romance_data.csv");
+    console.log("romance_data", romance_data);
+
+    // Format numbers
+    romance_data.forEach(d => {
+      d.total_speakers = +d.total_speakers;
+      d.native_speakers = +d.native_speakers;
+    });
+
+    const [new_root, new_descendants, new_leaves] = CSVToHierarchy(romance_data);
+    console.log("new_root", new_root);
+    console.log("new_leaves", new_leaves);
+    drawTreemap(new_root, new_leaves);
+  }
+  */
   let newData = [];
 
   newData.push({
@@ -136,10 +157,16 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
     : data.filter(respondent => respondent.parent                 
         === selectedFilter);                  //filter the data to make sure respodent gender matches selected filter            
   
-  
-  const [new_root, new_descendants, new_leaves] = CSVToHierarchy(newData);
+  //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
+  /*const csvFiltered = csvFormat(newData);
+  console.log(csvFiltered);
+  */
+
+  const [new_root, new_descendants, new_leaves] = CSVToHierarchy(csvFiltered);
   console.log("new_root", new_root);
   console.log("new_leaves", new_leaves);
+  drawTreemap(new_root, new_leaves)
+  
   /*
   const hierarchyGenerator = stratify()
     .id(d => d.child)
@@ -151,7 +178,7 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
   console.log("newLeaves", newLeaves);
   */
   //console.log("updatedData", updatedData)
-  const bins = binGenerator(updatedData);          
+  /*const bins = binGenerator(updatedData);          
   const xScale = scaleLinear();
   const yScale = scaleLinear();
       
@@ -164,7 +191,7 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
       .duration(500)
       .attr("y", d => yScale(d.length))
       .attr("height", d => innerHeight - yScale(d.length));    
-
+      */
 };
 
 
