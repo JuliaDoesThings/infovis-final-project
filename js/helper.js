@@ -13,8 +13,8 @@ export const languageFamilies = [
 ];
 
 export const programs = [
-    {label: "Asian/Pacific Islander", color: "#6be8a5"},
-    {label: "American Indian/Alaska Native/Hawaiian", color: "#6bd3e8"},
+    {label: "Asian_Pacific Islander", color: "#6be8a5"},
+    {label: "American Indian_Alaska Native/Hawaiian", color: "#6bd3e8"},
     {label: "White", color: "#886be8"},
     {label: "Black", color: "#31347d"}
 ];

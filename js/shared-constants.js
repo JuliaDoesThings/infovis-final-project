@@ -1,4 +1,10 @@
 import { bin } from "d3-array";
+import { treemap, treemapResquarify } from "d3-hierarchy";
+
+///numbers
+export const width = 850;
+export const height = 600;
+
 
 /**********************/
 /*       Colors       */
@@ -20,6 +26,13 @@ const blackColor = "#31347d";
 export const binGenerator = bin()
   .value(d => d.total_speakers);
 
+export const treemapLayoutGenerator = treemap()
+    .size(([width, height]))
+    .tile(treemapResquarify)
+    .paddingInner(1)
+    .paddingOuter(1)
+    .round(true);
+
 
 /***********************/
 /*       Filters       */
@@ -28,8 +41,8 @@ export const filters = [
   { id: "all", label: "All", isActive: true },
   { id: "White", label: "White", isActive: false },
   { id: "Black", label: "Black", isActive: false },
-  { id: "American Indian/Alaska Native/Hawaiian", label: "Native", isActive: false},
-  { id: "Asian/Pacific Islander", label: "Asian", isActive: false}
+  { id: "American Indian_Alaska Native/Hawaiian", label: "Native", isActive: false},
+  { id: "Asian_Pacific Islander", label: "Asian", isActive: false}
 ];
 
 export const tempFilters = [

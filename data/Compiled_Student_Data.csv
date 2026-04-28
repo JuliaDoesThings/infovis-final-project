@@ -1,34 +1,34 @@
 ﻿child,parent,enrolled
-Enrollment by Race,,,
-White,Enrollment by Race,,
-Black,Enrollment by Race,,
-American Indian/Alaska Native/Hawaiian,Enrollment by Race,,
-Asian/Pacific Islander,Enrollment by Race,,
-TK,White,844
-Armed Forces Family,White,551
-Structed English Immersion Program or similar,White,2200
-Homeless,White,1127
-Developmental Bilingual Program,White,705
-Parents Opted Out of EL Services,White,29
-GATE,White,135
-Migrant,White,28
-Armed Forces Family,Black,110
-Structed English Immersion Program or similar,Black,46
-Homeless,Black,155
-Developmental Bilingual Program,Black,4
-Parents Opted Out of EL Services,Black,1
-GATE,Black,36
-TK,Black,75
-TK,American Indian/Alaska Native/Hawaiian,35
-GATE,American Indian/Alaska Native/Hawaiian,15
-Developmental Bilingual Program,American Indian/Alaska Native/Hawaiian,22
-Homeless,American Indian/Alaska Native/Hawaiian,58
-Structed English Immersion Program or similar,American Indian/Alaska Native/Hawaiian,92
-Armed Forces Family,American Indian/Alaska Native/Hawaiian,35
-Armed Forces Family,Asian/Pacific Islander,346
-Structed English Immersion Program or similar,Asian/Pacific Islander,1325
-Homeless,Asian/Pacific Islander,417
-Developmental Bilingual Program,Asian/Pacific Islander,41
-Parents Opted Out of EL Services,Asian/Pacific Islander,10
-GATE,Asian/Pacific Islander,263
-TK,Asian/Pacific Islander,314
+Enrollment_by_Race,,
+White,Enrollment_by_Race,
+Black,Enrollment_by_Race,
+American Indian_Alaska Native_Hawaiian,Enrollment_by_Race,
+Asian/Pacific Islander,Enrollment_by_Race,
+w-TK,White,844
+w-Armed Forces Family,White,551
+w-Structed English Immersion Program or similar,White,2200
+w-Homeless,White,1127
+w-Developmental Bilingual Program,White,705
+w-Parents Opted Out of EL Services,White,29
+w-GATE,White,135
+w-Migrant,White,28
+b-Armed Forces Family,Black,110
+b-Structed English Immersion Program or similar,Black,46
+b-Homeless,Black,155
+b-Developmental Bilingual Program,Black,4
+b-Parents Opted Out of EL Services,Black,1
+b-GATE,Black,36
+b-TK,Black,75
+n-TK,American Indian_Alaska Native_Hawaiian,35
+n-GATE,American Indian_Alaska Native_Hawaiian,15
+n-Developmental Bilingual Program,American Indian_Alaska Native_Hawaiian,22
+n-Homeless,American Indian_Alaska Native_Hawaiian,58
+n-Structed English Immersion Program or similar,American Indian_Alaska Native_Hawaiian,92
+n-Armed Forces Family,American Indian_Alaska Native_Hawaiian,35
+a-Armed Forces Family,Asian_Pacific Islander,346
+a-Structed English Immersion Program or similar,Asian_Pacific Islander,1325
+a-Homeless,Asian_Pacific Islander,417
+a-Developmental Bilingual Program,Asian_Pacific Islander,41
+a-Parents Opted Out of EL Services,Asian_Pacific Islander,10
+a-GATE,Asian_Pacific Islander,263
+a-TK,Asian_Pacific Islander,314

@@ -561,25 +561,24 @@ var _loadDataJs = require("./load-data.js");
 var _hierarchyJs = require("./hierarchy.js");
 var _circlePackJs = require("./circle-pack.js");
 var _treemapJs = require("./treemap.js");
-var _interactionsJs = require("./interactions.js");
+//import { populateFilters } from "./interactions.js";
 // Load and format the hierarchical data
 const flatData = (0, _loadDataJs.loadTestData)();
 const [root, descendants, leaves] = (0, _hierarchyJs.CSVToHierarchy)(flatData);
-const realData = (0, _loadDataJs.loadRealData)();
+const realData = (0, _loadDataJs.loadTestData)();
 const [rroot, rdescendants, rleaves] = (0, _loadDataJs.loadRealData)();
-(0, _circlePackJs.drawCirclePack)(rroot, rdescendants, rleaves);
-(0, _treemapJs.drawTreemap)(rroot, rleaves);
 //const jsonData = loadJSONData();
 //const [jroot, jdescendants, jleaves] = JSONToHierarchy(jsonData)
 //drawCirclePack (jroot, jdescendants, jleaves);
 //drawTreemap(jroot, jleaves);
-(0, _interactionsJs.populateFilters)(flatData);
+//populateFilters(flatData);
+(0, _treemapJs.testingPopulateFilters)(flatData);
 // Draw the circle pack
 (0, _circlePackJs.drawCirclePack)(root, descendants, leaves);
 // Draw the treemap
 (0, _treemapJs.drawTreemap)(root, leaves);
 
-},{"./load-data.js":"bJWfj","./hierarchy.js":"k5lNf","./treemap.js":"g4qOy","./circle-pack.js":"3QqrX","./interactions.js":"kEhbs"}],"bJWfj":[function(require,module,exports) {
+},{"./load-data.js":"bJWfj","./hierarchy.js":"k5lNf","./treemap.js":"g4qOy","./circle-pack.js":"3QqrX"}],"bJWfj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadTestData", ()=>loadTestData);
@@ -602,13 +601,14 @@ const loadRealData = ()=>{
     // const jsonData = JSON.stringify(unformattedData);
     console.log("csvData", unformattedData);
     unformattedData.forEach((d)=>{
-        d.enrolled = +d.total_speakers;
+        d.enrolled = +d.enrolled;
     });
-    const formattedData = formatData(unformattedData);
+    //const formattedData = formatData(unformattedData);
+    console.log("unformattedData", unformattedData);
     //select just the information needed & return
     //console.log("formatted",formattedData )
     //const jsonData = JSON.stringify(formattedData)
-    return formattedData;
+    return unformattedData;
 };
 const formatData = (data)=>{
     data.forEach((row)=>{
@@ -804,7 +804,7 @@ exports.export = function(dest, destName, get) {
 };
 
 },{}],"3Hj2M":[function(require,module,exports) {
-module.exports = JSON.parse('[{"\uFEFFchild":"Enrollment by Race","parent":"","enrolled":"","__parsed_extra":[""]},{"\uFEFFchild":"White","parent":"Enrollment by Race","enrolled":"","__parsed_extra":[""]},{"\uFEFFchild":"Black","parent":"Enrollment by Race","enrolled":"","__parsed_extra":[""]},{"\uFEFFchild":"American Indian/Alaska Native/Hawaiian","parent":"Enrollment by Race","enrolled":"","__parsed_extra":[""]},{"\uFEFFchild":"Asian/Pacific Islander","parent":"Enrollment by Race","enrolled":"","__parsed_extra":[""]},{"\uFEFFchild":"TK","parent":"White","enrolled":"844"},{"\uFEFFchild":"Armed Forces Family","parent":"White","enrolled":"551"},{"\uFEFFchild":"Structed English Immersion Program or similar","parent":"White","enrolled":"2200"},{"\uFEFFchild":"Homeless","parent":"White","enrolled":"1127"},{"\uFEFFchild":"Developmental Bilingual Program","parent":"White","enrolled":"705"},{"\uFEFFchild":"Parents Opted Out of EL Services","parent":"White","enrolled":"29"},{"\uFEFFchild":"GATE","parent":"White","enrolled":"135"},{"\uFEFFchild":"Migrant","parent":"White","enrolled":"28"},{"\uFEFFchild":"Armed Forces Family","parent":"Black","enrolled":"110"},{"\uFEFFchild":"Structed English Immersion Program or similar","parent":"Black","enrolled":"46"},{"\uFEFFchild":"Homeless","parent":"Black","enrolled":"155"},{"\uFEFFchild":"Developmental Bilingual Program","parent":"Black","enrolled":"4"},{"\uFEFFchild":"Parents Opted Out of EL Services","parent":"Black","enrolled":"1"},{"\uFEFFchild":"GATE","parent":"Black","enrolled":"36"},{"\uFEFFchild":"TK","parent":"Black","enrolled":"75"},{"\uFEFFchild":"TK","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"35"},{"\uFEFFchild":"GATE","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"15"},{"\uFEFFchild":"Developmental Bilingual Program","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"22"},{"\uFEFFchild":"Homeless","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"58"},{"\uFEFFchild":"Structed English Immersion Program or similar","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"92"},{"\uFEFFchild":"Armed Forces Family","parent":"American Indian/Alaska Native/Hawaiian","enrolled":"35"},{"\uFEFFchild":"Armed Forces Family","parent":"Asian/Pacific Islander","enrolled":"346"},{"\uFEFFchild":"Structed English Immersion Program or similar","parent":"Asian/Pacific Islander","enrolled":"1325"},{"\uFEFFchild":"Homeless","parent":"Asian/Pacific Islander","enrolled":"417"},{"\uFEFFchild":"Developmental Bilingual Program","parent":"Asian/Pacific Islander","enrolled":"41"},{"\uFEFFchild":"Parents Opted Out of EL Services","parent":"Asian/Pacific Islander","enrolled":"10"},{"\uFEFFchild":"GATE","parent":"Asian/Pacific Islander","enrolled":"263"},{"\uFEFFchild":"TK","parent":"Asian/Pacific Islander","enrolled":"314"},{"\uFEFFchild":""}]');
+module.exports = JSON.parse('[{"\uFEFFchild":"Enrollment_by_Race","parent":"","enrolled":""},{"\uFEFFchild":"White","parent":"Enrollment_by_Race","enrolled":""},{"\uFEFFchild":"Black","parent":"Enrollment_by_Race","enrolled":""},{"\uFEFFchild":"American Indian_Alaska Native_Hawaiian","parent":"Enrollment_by_Race","enrolled":""},{"\uFEFFchild":"Asian/Pacific Islander","parent":"Enrollment_by_Race","enrolled":""},{"\uFEFFchild":"w-TK","parent":"White","enrolled":"844"},{"\uFEFFchild":"w-Armed Forces Family","parent":"White","enrolled":"551"},{"\uFEFFchild":"w-Structed English Immersion Program or similar","parent":"White","enrolled":"2200"},{"\uFEFFchild":"w-Homeless","parent":"White","enrolled":"1127"},{"\uFEFFchild":"w-Developmental Bilingual Program","parent":"White","enrolled":"705"},{"\uFEFFchild":"w-Parents Opted Out of EL Services","parent":"White","enrolled":"29"},{"\uFEFFchild":"w-GATE","parent":"White","enrolled":"135"},{"\uFEFFchild":"w-Migrant","parent":"White","enrolled":"28"},{"\uFEFFchild":"b-Armed Forces Family","parent":"Black","enrolled":"110"},{"\uFEFFchild":"b-Structed English Immersion Program or similar","parent":"Black","enrolled":"46"},{"\uFEFFchild":"b-Homeless","parent":"Black","enrolled":"155"},{"\uFEFFchild":"b-Developmental Bilingual Program","parent":"Black","enrolled":"4"},{"\uFEFFchild":"b-Parents Opted Out of EL Services","parent":"Black","enrolled":"1"},{"\uFEFFchild":"b-GATE","parent":"Black","enrolled":"36"},{"\uFEFFchild":"b-TK","parent":"Black","enrolled":"75"},{"\uFEFFchild":"n-TK","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"35"},{"\uFEFFchild":"n-GATE","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"15"},{"\uFEFFchild":"n-Developmental Bilingual Program","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"22"},{"\uFEFFchild":"n-Homeless","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"58"},{"\uFEFFchild":"n-Structed English Immersion Program or similar","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"92"},{"\uFEFFchild":"n-Armed Forces Family","parent":"American Indian_Alaska Native_Hawaiian","enrolled":"35"},{"\uFEFFchild":"a-Armed Forces Family","parent":"Asian_Pacific Islander","enrolled":"346"},{"\uFEFFchild":"a-Structed English Immersion Program or similar","parent":"Asian_Pacific Islander","enrolled":"1325"},{"\uFEFFchild":"a-Homeless","parent":"Asian_Pacific Islander","enrolled":"417"},{"\uFEFFchild":"a-Developmental Bilingual Program","parent":"Asian_Pacific Islander","enrolled":"41"},{"\uFEFFchild":"a-Parents Opted Out of EL Services","parent":"Asian_Pacific Islander","enrolled":"10"},{"\uFEFFchild":"a-GATE","parent":"Asian_Pacific Islander","enrolled":"263"},{"\uFEFFchild":"a-TK","parent":"Asian_Pacific Islander","enrolled":"314"},{"\uFEFFchild":""}]');
 
 },{}],"6voE5":[function(require,module,exports) {
 module.exports = JSON.parse('{"name":"Programs by Race","children":[{"name":"Asian/Pacific Islander","children":[{"name":"Armed Forces Family","enrolled":346},{"name":"Structed English Immersion Program or similar","enrolled":1325},{"name":"Homeless","enrolled":417},{"name":"Developmental Bilingual Program","enrolled":41},{"name":"Parents Opted Out of EL Services","enrolled":10},{"name":"GATE","enrolled":263},{"name":"TK","enrolled":314}]},{"name":"American Indian/Alaska Native/Hawaiian","children":[{"name":"Armed Forces Family","enrolled":35},{"name":"Structed English Immersion Program or similar","enrolled":92},{"name":"Homeless","enrolled":58},{"name":"Developmental Bilingual Program","enrolled":22},{"name":"GATE","enrolled":15},{"name":"TK","enrolled":35}]},{"name":"White","children":[{"name":"TK","enrolled":844},{"name":"Armed Forces Family","enrolled":551},{"name":"Structed English Immersion Program or similar","enrolled":2200},{"name":"Homeless","enrolled":1127},{"name":"Developmental Bilingual Program","enrolled":705},{"name":"Parents Opted Out of EL Services","enrolled":29},{"name":"GATE","enrolled":135},{"name":"Migrant","enrolled":28}]},{"name":"Black","children":[{"name":"Armed Forces Family","enrolled":110},{"name":"Structed English Immersion Program or similar","enrolled":46},{"name":"Homeless","enrolled":155},{"name":"Developmental Bilingual Program","enrolled":4},{"name":"Parents Opted Out of EL Services","enrolled":1},{"name":"GATE","enrolled":36},{"name":"TK","enrolled":75}]}]}');
@@ -1787,19 +1787,24 @@ exports.default = function custom(ratio) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "drawTreemap", ()=>drawTreemap);
+parcelHelpers.export(exports, "testingPopulateFilters", ()=>testingPopulateFilters);
+parcelHelpers.export(exports, "populateTestFilters", ()=>populateTestFilters);
 var _d3Hierarchy = require("d3-hierarchy");
 var _d3Selection = require("d3-selection");
 var _scales = require("./scales");
+var _sharedConstants = require("./shared-constants");
+var _d3Scale = require("d3-scale");
+var _d3Ease = require("d3-ease");
+var _d3Transition = require("d3-transition");
+var _hierarchy = require("./hierarchy");
 const drawTreemap = (root, leaves)=>{
     // Dimensions
     const width = 850;
     const height = 600;
     // Compute the layout
-    const treemapLayoutGenerator = (0, _d3Hierarchy.treemap)().size([
-        width,
-        height
-    ]).tile((0, _d3Hierarchy.treemapResquarify)).paddingInner(1).paddingOuter(1).round(true);
-    treemapLayoutGenerator(root);
+    (0, _sharedConstants.treemapLayoutGenerator)(root);
+    //console.log("root", root)
+    //console.log("generated", treemapLayoutGenerator(root))
     // Append svg container
     const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
     // Append a group for each leaf
@@ -1815,8 +1820,89 @@ const drawTreemap = (root, leaves)=>{
         return d.y1 - d.y0 >= 25 && d.x1 - d.x0 >= textWidth + 10 ? 1 : 0;
     });
 };
+const testingPopulateFilters = (data)=>{
+    const filterTemplates = (0, _sharedConstants.tempFilters);
+    const filterButtons = (0, _d3Selection.select)("#filters");
+    const rects = (0, _sharedConstants.binGenerator)(data);
+    //const treeGenerator = treemapLayoutGenerator(data);
+    /*const treemapLayoutGenerator = treemap()
+    .size(([width, height]))
+    .tile(treemapResquarify)
+    .paddingInner(1)
+    .paddingOuter(1)
+    .round(true);
+*/ filterButtons.selectAll(".filter").data(filterTemplates).join("button").attr("class", (d)=>`filter ${d.isActive ? "active" : ""}`).text((d)=>d.label).on("click", (e, d)=>{
+        const svg = (0, _d3Selection.select)("#treemap") //confirmed - all selected properly
+        ;
+        const leaves = svg.selectAll(".treemap-node");
+        console.log("leaves", leaves);
+        //svg.selectAll(".treemap-node")
+        //  .attr("fill", "#6be8a5");
+        console.log("DOM event", e);
+        console.log("Attached datum", d);
+        if (!d.isActive) {
+            (0, _sharedConstants.filters).forEach((filter)=>{
+                filter.isActive = d.id === filter.id ? true : false;
+            });
+            filterButtons.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false);
+            updateTreemap(d.id, data);
+        }
+    });
+};
+const updateTreemap = (selectedFilter, data)=>{
+    console.log("selectedFilter", selectedFilter);
+    //console.log("test print data", data);
+    let newData = [];
+    newData.push({
+        "child": `${selectedFilter}`,
+        "parent": "",
+        "native_speakers": 0,
+        "total_speakers": 0
+    });
+    data.forEach((row)=>{
+        if (row.parent == selectedFilter) newData.push(row);
+    //console.log(row.parent)
+    });
+    console.log("newData", newData);
+    // Update the treemap here
+    const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.parent === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
+    const [new_root, new_descendants, new_leaves] = (0, _hierarchy.CSVToHierarchy)(newData);
+    console.log("new_root", new_root);
+    console.log("new_leaves", new_leaves);
+    /*
+  const hierarchyGenerator = stratify()
+    .id(d => d.child)
+    .parentId(d => d.parent);
+  const newRoot = hierarchyGenerator(newData)
 
-},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gn9gd":[function(require,module,exports) {
+  console.log("root", newRoot);
+  const newLeaves = newRoot.leaves()
+  console.log("newLeaves", newLeaves);
+  */ //console.log("updatedData", updatedData)
+    const bins = (0, _sharedConstants.binGenerator)(updatedData);
+    const xScale = (0, _d3Scale.scaleLinear)();
+    const yScale = (0, _d3Scale.scaleLinear)();
+    const treemapRects = (0, _d3Selection.selectAll)("#treemap rect");
+    treemapRects.data(bins).transition().duration(500).attr("y", (d)=>yScale(d.length)).attr("height", (d)=>innerHeight - yScale(d.length));
+};
+const populateTestFilters = (data)=>{
+    // Create the filters here
+    const filters = (0, _d3Selection.select)("#filters");
+    filters.selectAll(".filter").data(filters).join("button").attr("class", (d)=>`filter ${d.isActive ? "active" : ""}`) //if isActive, add class active                                      
+    .text((d)=>d.label).on("click", (e, d)=>{
+        console.log("DOM event", e);
+        //console.log("Attached datum", d);
+        if (!d.isActive) {
+            filters.forEach((filter)=>{
+                filter.isActive = d.id === filter.id ? true : false;
+            });
+            filters.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false); //use classed to swap around active class                                 
+            updateHistogram(d.id, data);
+        }
+    });
+};
+
+},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./shared-constants":"2wRDA","d3-scale":"UQ8g3","d3-ease":"8sCNl","d3-transition":"4lorl","./hierarchy":"k5lNf"}],"gn9gd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "create", ()=>(0, _createJsDefault.default));
@@ -5225,11 +5311,11 @@ const languageFamilies = [
 ];
 const programs = [
     {
-        label: "Asian/Pacific Islander",
+        label: "Asian_Pacific Islander",
         color: "#6be8a5"
     },
     {
-        label: "American Indian/Alaska Native/Hawaiian",
+        label: "American Indian_Alaska Native/Hawaiian",
         color: "#6bd3e8"
     },
     {
@@ -5242,126 +5328,19 @@ const programs = [
     }
 ];
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2wRDA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "drawCirclePack", ()=>drawCirclePack);
-var _d3Hierarchy = require("d3-hierarchy");
-var _d3Selection = require("d3-selection");
-var _scales = require("./scales");
-var _d3Interpolate = require("d3-interpolate");
-var _d3Format = require("d3-format");
-const drawCirclePack = (root, descendants, leaves)=>{
-    // Dimensions
-    const width = 800;
-    const height = 800;
-    const margin = {
-        top: 1,
-        right: 1,
-        bottom: 1,
-        left: 1
-    };
-    const innerWidth = width - margin.right - margin.left;
-    const innerHeight = height - margin.top - margin.bottom;
-    // Compute the size of the circles
-    root.sum((d)=>d.total_speakers);
-    // Compute the layout
-    const packLayoutGenerator = (0, _d3Hierarchy.pack)().size([
-        innerWidth,
-        innerHeight
-    ]).padding(3); // Separation between circles
-    packLayoutGenerator(root);
-    // Append the SVG container
-    const svg = (0, _d3Selection.select)("#circle-pack").append("svg").attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
-    // Append circles
-    svg.selectAll(".pack-circle").data(descendants).join("circle").attr("class", (d)=>`pack-circle pack-circle-depth-${d.depth}`).attr("cx", (d)=>d.x).attr("cy", (d)=>d.y).attr("r", (d)=>d.r).attr("fill", (d)=>{
-        switch(d.depth){
-            case 1:
-                return (0, _scales.colorScale)(d.id);
-            case 2:
-                return (0, _d3Interpolate.interpolate)((0, _scales.colorScale)(d.parent.id), "white")(0.5);
-            default:
-                return "white";
-        }
-    }).attr("stroke", (d)=>d.depth === 0 ? "gray" : "none");
-    // Append labels
-    const minRadius = 22;
-    svg.selectAll(".leaf-label-container").data(leaves.filter((leave)=>leave.r >= minRadius)).join("foreignObject").attr("class", "leaf-label-container").attr("width", (d)=>2 * d.r).attr("height", 40).attr("x", (d)=>d.x - d.r).attr("y", (d)=>d.y - 20).append("xhtml:div").attr("class", "leaf-label").text((d)=>d.id);
-    // Interactions
-    (0, _d3Selection.selectAll)(".pack-circle-depth-3, foreignObject").on("mouseenter", (e, d)=>{
-        // console.log(d)
-        (0, _d3Selection.select)("#info .info-language").text(d.id);
-        (0, _d3Selection.select)("#info .info-branch .information").text(d.parent.id);
-        (0, _d3Selection.select)("#info .info-family .information").text(d.parent.data.parent);
-        (0, _d3Selection.select)("#info .info-total-speakers .information").text((0, _d3Format.format)(".3s")(d.data.total_speakers));
-        (0, _d3Selection.select)("#info .info-native-speakers .information").text((0, _d3Format.format)(".3s")(d.data.native_speakers));
-        (0, _d3Selection.select)("#instructions").classed("hidden", true);
-        (0, _d3Selection.select)("#info").classed("hidden", false);
-    }).on("mouseleave", ()=>{
-        (0, _d3Selection.select)("#instructions").classed("hidden", false);
-        (0, _d3Selection.select)("#info").classed("hidden", true);
-    });
-};
-
-},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","d3-interpolate":"6jJyi","d3-format":"4XOv2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kEhbs":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "populateFilters", ()=>populateFilters);
-parcelHelpers.export(exports, "populateTestFilters", ()=>populateTestFilters);
-var _d3Selection = require("d3-selection");
-var _sharedConstants = require("./shared-constants");
-var _d3Ease = require("d3-ease");
-var _d3Transition = require("d3-transition");
-var _d3Scale = require("d3-scale");
-const populateFilters = (data)=>{
-    const filterTemplates = (0, _sharedConstants.tempFilters);
-    const filterButtons = (0, _d3Selection.select)("#filters");
-    const bins = (0, _sharedConstants.binGenerator)(data);
-    filterButtons.selectAll(".filter").data(filterTemplates).join("button").attr("class", (d)=>`filter ${d.isActive ? "active" : ""}`).text((d)=>d.label).on("click", (e, d)=>{
-        console.log("DOM event", e);
-        console.log("Attached datum", d);
-        if (!d.isActive) {
-            (0, _sharedConstants.filters).forEach((filter)=>{
-                filter.isActive = d.id === filter.id ? true : false;
-            });
-            filterButtons.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false);
-            updateTreemap(d.id, data);
-        }
-    });
-};
-const updateTreemap = (selectedFilter, data)=>{
-    // Update the treemap here
-    const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.gender === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
-    const updatedBins = (0, _sharedConstants.binGenerator)(updatedData);
-    const xScale = (0, _d3Scale.scaleLinear)();
-    const yScale = (0, _d3Scale.scaleLinear)();
-    const treemapRects = (0, _d3Selection.selectAll)("#treemap rect");
-    treemapRects.data(updatedBins).transition().duration(500).ease((0, _d3Ease.easeLinear)).attr("y", (d)=>yScale(d.length)).attr("height", (d)=>innerHeight - yScale(d.length));
-};
-const populateTestFilters = (data)=>{
-    // Create the filters here
-    const filters = (0, _d3Selection.select)("#filters");
-    filters.selectAll(".filter").data(filters).join("button").attr("class", (d)=>`filter ${d.isActive ? "active" : ""}`) //if isActive, add class active                                      
-    .text((d)=>d.label).on("click", (e, d)=>{
-        console.log("DOM event", e);
-        //console.log("Attached datum", d);
-        if (!d.isActive) {
-            filters.forEach((filter)=>{
-                filter.isActive = d.id === filter.id ? true : false;
-            });
-            filters.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false); //use classed to swap around active class                                 
-            updateHistogram(d.id, data);
-        }
-    });
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","d3-selection":"gn9gd","./shared-constants":"2wRDA","d3-ease":"8sCNl","d3-transition":"4lorl","d3-scale":"UQ8g3"}],"2wRDA":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "width", ()=>width);
+parcelHelpers.export(exports, "height", ()=>height);
 parcelHelpers.export(exports, "binGenerator", ()=>binGenerator);
+parcelHelpers.export(exports, "treemapLayoutGenerator", ()=>treemapLayoutGenerator);
 parcelHelpers.export(exports, "filters", ()=>filters);
 parcelHelpers.export(exports, "tempFilters", ()=>tempFilters);
 var _d3Array = require("d3-array");
+var _d3Hierarchy = require("d3-hierarchy");
+const width = 850;
+const height = 600;
 /**********************/ /*       Colors       */ /**********************/ const slateGray = "#305252";
 const gray = "#606464";
 const white = "#faffff";
@@ -5372,6 +5351,10 @@ const nativeColor = "#6bd3e8";
 const whiteColor = "#886be8";
 const blackColor = "#31347d";
 const binGenerator = (0, _d3Array.bin)().value((d)=>d.total_speakers);
+const treemapLayoutGenerator = (0, _d3Hierarchy.treemap)().size([
+    width,
+    height
+]).tile((0, _d3Hierarchy.treemapResquarify)).paddingInner(1).paddingOuter(1).round(true);
 const filters = [
     {
         id: "all",
@@ -5389,12 +5372,12 @@ const filters = [
         isActive: false
     },
     {
-        id: "American Indian/Alaska Native/Hawaiian",
+        id: "American Indian_Alaska Native/Hawaiian",
         label: "Native",
         isActive: false
     },
     {
-        id: "Asian/Pacific Islander",
+        id: "Asian_Pacific Islander",
         label: "Asian",
         isActive: false
     }
@@ -5427,7 +5410,7 @@ const tempFilters = [
     }
 ];
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","d3-array":"1yX2W"}],"8sCNl":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","d3-array":"1yX2W","d3-hierarchy":"ffs4h"}],"8sCNl":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "easeLinear", ()=>(0, _linearJs.linear));
@@ -6564,6 +6547,67 @@ exports.default = function() {
     });
 };
 
-},{"./schedule.js":"de74c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["csuDB","bDbGG"], "bDbGG", "parcelRequire94c2")
+},{"./schedule.js":"de74c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3QqrX":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "drawCirclePack", ()=>drawCirclePack);
+var _d3Hierarchy = require("d3-hierarchy");
+var _d3Selection = require("d3-selection");
+var _scales = require("./scales");
+var _d3Interpolate = require("d3-interpolate");
+var _d3Format = require("d3-format");
+const drawCirclePack = (root, descendants, leaves)=>{
+    // Dimensions
+    const width = 800;
+    const height = 800;
+    const margin = {
+        top: 1,
+        right: 1,
+        bottom: 1,
+        left: 1
+    };
+    const innerWidth = width - margin.right - margin.left;
+    const innerHeight = height - margin.top - margin.bottom;
+    // Compute the size of the circles
+    root.sum((d)=>d.total_speakers);
+    // Compute the layout
+    const packLayoutGenerator = (0, _d3Hierarchy.pack)().size([
+        innerWidth,
+        innerHeight
+    ]).padding(3); // Separation between circles
+    packLayoutGenerator(root);
+    // Append the SVG container
+    const svg = (0, _d3Selection.select)("#circle-pack").append("svg").attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
+    // Append circles
+    svg.selectAll(".pack-circle").data(descendants).join("circle").attr("class", (d)=>`pack-circle pack-circle-depth-${d.depth}`).attr("cx", (d)=>d.x).attr("cy", (d)=>d.y).attr("r", (d)=>d.r).attr("fill", (d)=>{
+        switch(d.depth){
+            case 1:
+                return (0, _scales.colorScale)(d.id);
+            case 2:
+                return (0, _d3Interpolate.interpolate)((0, _scales.colorScale)(d.parent.id), "white")(0.5);
+            default:
+                return "white";
+        }
+    }).attr("stroke", (d)=>d.depth === 0 ? "gray" : "none");
+    // Append labels
+    const minRadius = 22;
+    svg.selectAll(".leaf-label-container").data(leaves.filter((leave)=>leave.r >= minRadius)).join("foreignObject").attr("class", "leaf-label-container").attr("width", (d)=>2 * d.r).attr("height", 40).attr("x", (d)=>d.x - d.r).attr("y", (d)=>d.y - 20).append("xhtml:div").attr("class", "leaf-label").text((d)=>d.id);
+    // Interactions
+    (0, _d3Selection.selectAll)(".pack-circle-depth-3, foreignObject").on("mouseenter", (e, d)=>{
+        // console.log(d)
+        (0, _d3Selection.select)("#info .info-language").text(d.id);
+        (0, _d3Selection.select)("#info .info-branch .information").text(d.parent.id);
+        (0, _d3Selection.select)("#info .info-family .information").text(d.parent.data.parent);
+        (0, _d3Selection.select)("#info .info-total-speakers .information").text((0, _d3Format.format)(".3s")(d.data.total_speakers));
+        (0, _d3Selection.select)("#info .info-native-speakers .information").text((0, _d3Format.format)(".3s")(d.data.native_speakers));
+        (0, _d3Selection.select)("#instructions").classed("hidden", true);
+        (0, _d3Selection.select)("#info").classed("hidden", false);
+    }).on("mouseleave", ()=>{
+        (0, _d3Selection.select)("#instructions").classed("hidden", false);
+        (0, _d3Selection.select)("#info").classed("hidden", true);
+    });
+};
+
+},{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","d3-interpolate":"6jJyi","d3-format":"4XOv2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["csuDB","bDbGG"], "bDbGG", "parcelRequire94c2")
 
 //# sourceMappingURL=index.fbb3188c.js.map

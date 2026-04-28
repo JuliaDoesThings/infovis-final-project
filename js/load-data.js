@@ -23,15 +23,16 @@ export const loadRealData = () => {
 
     console.log("csvData", unformattedData);
     unformattedData.forEach(d => {
-        d.enrolled = +d.total_speakers;
+        d.enrolled = +d.enrolled;
     })
-    const formattedData = formatData(unformattedData);
+    //const formattedData = formatData(unformattedData);
 
+    console.log("unformattedData", unformattedData);
 
     //select just the information needed & return
     //console.log("formatted",formattedData )
     //const jsonData = JSON.stringify(formattedData)
-    return formattedData;
+    return unformattedData;
 
 };
 

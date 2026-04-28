@@ -2,7 +2,7 @@
 114C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\d3-array\README.md134199941251329842 0
 138C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\markdown-ansi\src\markdown-ansi.js134199941240968724 0
 104C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\css-what134214699367711607 1
-87C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data134214711433633769 1
+87C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data134216675616941766 1
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\utils\src\getRootDir.js134199941247635721 0
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\d3-time\src\second.js134199941245046205 0
 132C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@swc\helpers\src\_async_iterator.mjs134199941252463008 0
@@ -22,8 +22,8 @@
 146C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@jridgewell\sourcemap-codec\src\sourcemap-codec.ts134199941244545760 0
 170C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\node-resolver-core\test\fixture\node_modules\aliased-file\index.js134199941248713159 0
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\json5\lib\unicode.d.ts134199941246935026 0
-114C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\.package-lock.json134215246654251266 0
-95C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules134215246652728071 1
+114C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\.package-lock.json134215250728107720 0
+95C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules134215250726990784 1
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\optimizer-css134214699114537577 1
 143C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@jridgewell\set-array\dist\set-array.umd.js.map134199941242302370 0
 115C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\type-fest\readme.md134199941240885783 0
@@ -45,7 +45,7 @@
 147C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\mdb_copy.c134199941249129665 0
 126C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\core\src\assetUtils.js134199941248546673 0
 132C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\csso\lib\replace\atrule\keyframes.js134199941249129665 0
-87C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist134215250588920852 1
+87C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist134218836185656273 1
 124C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\css-select\lib\sort.d.ts.map134199941247385504 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\AX.js134199941250046467 0
 113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\csso\CHANGELOG.md134199941250495212 0
@@ -64,7 +64,7 @@
 130C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\type-fest\source\set-optional.d.ts134199941248546673 0
 123C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\css-tree\lib\lexer\index.js134199941251396453 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\SD.js134199941259892307 0
-100C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\package-lock.json134215246653730547 0
+100C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\package-lock.json134215250727650069 0
 137C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\node-gyp-build-optional-packages\index.js134199941241238946 0
 120C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\domhandler\lib\node.d.ts134199941244410676 0
 108C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\yaml\pair.js134199941246296410 0
@@ -134,7 +134,7 @@
 123C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\watcher\src\Glob.cc134199941244712730 0
 122C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\graph\lib\index.js134199941245635966 0
 155C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\dom-serializer\node_modules\entities\lib\maps\entities.json134199941243712705 0
-101C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@lmdb134215246652728071 1
+101C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@lmdb134215250726995853 1
 107C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\detect-libc134214699455169434 1
 105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@mischnic134214699042192097 1
 125C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lightningcss\node\ast.js.flow134199941242135736 0
@@ -152,7 +152,7 @@
 129C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\optimizer-image\native.js134199941241568763 0
 133C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\terser\node_modules\commander\LICENSE134199941239458449 0
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\msgpackr\node-index.js134199941245802486 0
-113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@msgpackr-extract134215246652728071 1
+113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@msgpackr-extract134215250726990784 1
 137C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\core\lib\requests\EntryRequest.js134199941251312868 0
 100C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@swc134214699191116732 1
 141C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\features\background-sync.js134199941250709052 0
@@ -364,7 +364,7 @@
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\d3-scale\src\linear.js134199941245295958 0
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\mdn-data\css\index.js134199941240885783 0
 110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\internmap\dist134214699485243833 1
-95C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\helper.js134214718193985136 0
+95C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\helper.js134218770237908529 0
 158C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\package-manager\test\fixtures\has-foo\node_modules\foo134214699122933771 1
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\msgpackr\dist\node.cjs134199941242552033 0
 136C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\dependencies\v8\v8-fast-api-calls.h134199941253047458 0
@@ -672,7 +672,7 @@
 115C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\semver\package.json134199941242488997 0
 147C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\mdb_copy.1134199941246795831 0
 110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\yaml\util.d.ts134199941250962770 0
-106C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.66daa216.css134215250588495000 0
+106C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.66daa216.css134218836142925365 0
 112C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\binding.gyp134199941252543093 0
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\rollup.config.js134199941253418943 0
 143C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\lmdb\dependencies\lz4\lib\dll\example\README.md134199941253608960 0
@@ -1738,7 +1738,7 @@
 113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\nth-check\lib\esm134214699527562094 1
 120C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\nth-check\lib\index.d.ts134199941247463811 0
 132C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\css-tree\lib\syntax\config\walker.js134199941253348874 0
-101C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\interactions.js134215250584243893 0
+101C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\interactions.js134218836183538616 0
 124C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\nth-check\lib\index.d.ts.map134199941245719567 0
 126C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\nth-check\lib\esm\compile.d.ts134199941247244866 0
 130C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\nth-check\lib\esm\compile.d.ts.map134199941244828346 0
@@ -2348,7 +2348,7 @@
 128C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\entities\lib\decode_codepoint.js134199941239942260 0
 129C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\entities\lib\encode-trie.d.ts.map134199941246504004 0
 120C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\entities\lib\encode.d.ts134199941247879686 0
-98C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\load-data.js134215247377896155 0
+98C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\load-data.js134215267623226595 0
 136C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\features\decorators.js134199941255786591 0
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\d3-array\src\union.js134199941250879379 0
 133C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\domelementtype\lib\esm\index.d.ts.map134199941243134923 0
@@ -3256,7 +3256,7 @@
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\color-convert\index.js134199941241522250 0
 118C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\color-convert\route.js134199941243248854 0
 139C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\transformer-js\src\JSTransformer.js134199941242968901 0
-98C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.html134215250588607919 0
+98C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.html134218836143737664 0
 126C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@parcel\watcher\src\Watcher.cc134199941245379792 0
 112C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\clone\.npmignore134199941239812250 0
 136C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\@mischnic\json-sourcemap\dist\index.d.ts134199941241568763 0
@@ -3343,7 +3343,7 @@
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CK.js134199941252546764 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CR.js134199941253130022 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CU.js134199941255569959 0
-96C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\treemap.js134214865849483319 0
+96C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\treemap.js134218819189070347 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CV.js134199941255656604 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CX.js134199941255666597 0
 127C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\caniuse-lite\data\regions\CZ.js134199941255696617 0
@@ -3908,7 +3908,7 @@
 110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\LICENSE134199941241328450 0
 115C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\package.json134199941239278642 0
 112C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\README.md134199941242222851 0
-105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\shared-constants.js134214867627557956 0
+105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\shared-constants.js134218828751417130 0
 117C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\lib\compile.js134199941242885503 0
 119C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\lib\constants.js134199941243332092 0
 116C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\braces\lib\expand.js134199941243795901 0
@@ -4823,14 +4823,14 @@
 107C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\.bin\terser134199941261560244 0
 111C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\.bin\terser.cmd134199941261560244 0
 111C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\node_modules\.bin\terser.ps1134199941261560244 0
-93C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\main.js134215220859865103 0
-110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.66daa216.css.map134215250588535019 0
-106C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.d6b7085e.css134215250588284195 0
-110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.d6b7085e.css.map134215250588319483 0
-105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.fbb3188c.js134215250588855668 0
-109C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.fbb3188c.js.map134215250588910860 0
+93C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\js\main.js134218786073397569 0
+110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.66daa216.css.map134218836143011315 0
+106C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.d6b7085e.css134218836142817428 0
+110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.d6b7085e.css.map134218836142857698 0
+105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.fbb3188c.js134218836185592281 0
+109C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\dist\index.fbb3188c.js.map134218836185656273 0
 116C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\Anonymized_Student_Data.xlsx134206558984181180 0
-113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\Compiled_Student_Data.csv134214389411836755 0
+113C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\Compiled_Student_Data.csv134215333308511725 0
 101C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\flat_data.csv134188781802074944 0
 110C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\hierarchical-data.json134188781802074944 0
 105C:\Users\Julia\OneDrive\Documents\College\Info Visualization\infovis-final-project\data\Student_Data.json134214282243094519 0
