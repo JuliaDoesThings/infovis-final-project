@@ -8,8 +8,11 @@ import { transition } from "d3-transition";
 import { CSVToHierarchy } from "./hierarchy";
 import { csvFormat } from "d3-dsv";
 
+let all_root = null;
+let all_leaves = null;
+
 export const drawTreemap = (root, leaves) => {
-  
+  console.log("all_root", all_root);
   console.log("attempting draw");
 
   // Dimensions
@@ -24,6 +27,7 @@ export const drawTreemap = (root, leaves) => {
   // Append svg container
   const svg = select("#treemap")
     .append("svg")
+      .attr("class", "tree-svg")
       .attr("viewBox", `0 0 ${width} ${height}`);
 
   // Append a group for each leaf
@@ -106,15 +110,29 @@ filterButtons
         filterButtons.selectAll(".filter")
             .classed("active", filter => filter.id === d.id ? true : false); 
       
+        const target = svg.select(".tree-svg")
+        if (d.id == "all" || d.id == "All") 
+        {
+          console.log("attempting all");
+        }
+        else
+        {
+          console.log("d.id", d.id);
+        }
+        //console.log("target", target)
+        target.remove();
+        
         updateTreemap(d.id, data); 
         }
+        
+     
+      
     });                                    
 
 };
 
 const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the book, which uses filterId isntead of selectedFilter
   console.log("selectedFilter", selectedFilter)
-  //console.log("test print data", data);
 
   //test hardcoding for a moment - this runs into the same issue. exercise in futility.
   /*
@@ -134,39 +152,44 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
     drawTreemap(new_root, new_leaves);
   }
   */
-  let newData = [];
+  if (selectedFilter == "all") 
+  {
+    drawTreemap(all_root, all_leaves)
+  }
+  else {
+    let newData = [];
 
-  newData.push({
-    "child": `${selectedFilter}`,
-    "parent": "",
-    "native_speakers": 0,
-    "total_speakers" : 0
-  })
+    newData.push({
+      "child": `${selectedFilter}`,
+      "parent": "",
+      "native_speakers": 0,
+      "total_speakers" : 0
+    })
 
-  data.forEach(row => {
-    if (row.parent == selectedFilter) 
-      {
-        newData.push(row)
+    data.forEach(row => {
+      if (row.parent == selectedFilter) 
+        {
+          newData.push(row)
+        }
+      //console.log(row.parent)
+    });
+    console.log("newData", newData);
+
+    // Update the treemap here
+    const updatedData = selectedFilter === "all" ? data                                                       
+      : data.filter(respondent => respondent.parent                 
+          === selectedFilter);                  //filter the data to make sure respodent gender matches selected filter            
+    
+    //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
+    /*const csvFiltered = csvFormat(newData);
+    console.log(csvFiltered);
+    */
+
+    const [new_root, new_descendants, new_leaves] = CSVToHierarchy(newData);
+    console.log("new_root", new_root);
+    console.log("new_leaves", new_leaves);
+    drawTreemap(new_root, new_leaves)
       }
-    //console.log(row.parent)
-  });
-  console.log("newData", newData);
-
-  // Update the treemap here
-  const updatedData = selectedFilter === "all" ? data                                                       
-    : data.filter(respondent => respondent.parent                 
-        === selectedFilter);                  //filter the data to make sure respodent gender matches selected filter            
-  
-  //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
-  /*const csvFiltered = csvFormat(newData);
-  console.log(csvFiltered);
-  */
-
-  const [new_root, new_descendants, new_leaves] = CSVToHierarchy(csvFiltered);
-  console.log("new_root", new_root);
-  console.log("new_leaves", new_leaves);
-  drawTreemap(new_root, new_leaves)
-  
   /*
   const hierarchyGenerator = stratify()
     .id(d => d.child)
@@ -221,4 +244,10 @@ export const populateTestFilters = (data) => {
           updateHistogram(d.id, data);                                    
         }
       });
+}
+
+export const setAll = (root, leaves) => 
+{
+  all_root = root;
+  all_leaves = leaves;
 }

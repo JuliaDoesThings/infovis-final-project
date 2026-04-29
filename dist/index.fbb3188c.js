@@ -565,6 +565,7 @@ var _treemapJs = require("./treemap.js");
 // Load and format the hierarchical data
 const flatData = (0, _loadDataJs.loadTestData)();
 const [root, descendants, leaves] = (0, _hierarchyJs.CSVToHierarchy)(flatData);
+(0, _treemapJs.setAll)(root, leaves);
 const realData = (0, _loadDataJs.loadTestData)();
 const [rroot, rdescendants, rleaves] = (0, _loadDataJs.loadRealData)();
 //const jsonData = loadJSONData();
@@ -1789,6 +1790,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "drawTreemap", ()=>drawTreemap);
 parcelHelpers.export(exports, "testingPopulateFilters", ()=>testingPopulateFilters);
 parcelHelpers.export(exports, "populateTestFilters", ()=>populateTestFilters);
+parcelHelpers.export(exports, "setAll", ()=>setAll);
 var _d3Hierarchy = require("d3-hierarchy");
 var _d3Selection = require("d3-selection");
 var _scales = require("./scales");
@@ -1798,7 +1800,10 @@ var _d3Ease = require("d3-ease");
 var _d3Transition = require("d3-transition");
 var _hierarchy = require("./hierarchy");
 var _d3Dsv = require("d3-dsv");
+let all_root = null;
+let all_leaves = null;
 const drawTreemap = (root, leaves)=>{
+    console.log("all_root", all_root);
     console.log("attempting draw");
     // Dimensions
     const width = 850;
@@ -1808,7 +1813,7 @@ const drawTreemap = (root, leaves)=>{
     //console.log("root", root)
     //console.log("generated", treemapLayoutGenerator(root))
     // Append svg container
-    const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("viewBox", `0 0 ${width} ${height}`);
+    const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("class", "tree-svg").attr("viewBox", `0 0 ${width} ${height}`);
     // Append a group for each leaf
     const nodes = svg.selectAll(".node-container").data(leaves).join("g").attr("class", "node-container").attr("transform", (d)=>`translate(${d.x0}, ${d.y0})`);
     // Append a rectangle for each leaf 
@@ -1847,13 +1852,17 @@ const testingPopulateFilters = (data)=>{
                 filter.isActive = d.id === filter.id ? true : false;
             });
             filterButtons.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false);
+            const target = svg.select(".tree-svg");
+            if (d.id == "all" || d.id == "All") console.log("attempting all");
+            else console.log("d.id", d.id);
+            //console.log("target", target)
+            target.remove();
             updateTreemap(d.id, data);
         }
     });
 };
 const updateTreemap = (selectedFilter, data)=>{
     console.log("selectedFilter", selectedFilter);
-    //console.log("test print data", data);
     //test hardcoding for a moment - this runs into the same issue. exercise in futility.
     /*
   if (selectedFilter == "Romance") {
@@ -1871,27 +1880,30 @@ const updateTreemap = (selectedFilter, data)=>{
     console.log("new_leaves", new_leaves);
     drawTreemap(new_root, new_leaves);
   }
-  */ let newData = [];
-    newData.push({
-        "child": `${selectedFilter}`,
-        "parent": "",
-        "native_speakers": 0,
-        "total_speakers": 0
-    });
-    data.forEach((row)=>{
-        if (row.parent == selectedFilter) newData.push(row);
-    //console.log(row.parent)
-    });
-    console.log("newData", newData);
-    // Update the treemap here
-    const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.parent === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
-    //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
-    /*const csvFiltered = csvFormat(newData);
-  console.log(csvFiltered);
-  */ const [new_root, new_descendants, new_leaves] = (0, _hierarchy.CSVToHierarchy)(csvFiltered);
-    console.log("new_root", new_root);
-    console.log("new_leaves", new_leaves);
-    drawTreemap(new_root, new_leaves);
+  */ if (selectedFilter == "all") drawTreemap(all_root, all_leaves);
+    else {
+        let newData = [];
+        newData.push({
+            "child": `${selectedFilter}`,
+            "parent": "",
+            "native_speakers": 0,
+            "total_speakers": 0
+        });
+        data.forEach((row)=>{
+            if (row.parent == selectedFilter) newData.push(row);
+        //console.log(row.parent)
+        });
+        console.log("newData", newData);
+        // Update the treemap here
+        const updatedData = selectedFilter === "all" ? data : data.filter((respondent)=>respondent.parent === selectedFilter); //filter the data to make sure respodent gender matches selected filter            
+        //convert the data into a proper csv file, then run! //Does Not fix, at best gets same error. effort in futility
+        /*const csvFiltered = csvFormat(newData);
+    console.log(csvFiltered);
+    */ const [new_root, new_descendants, new_leaves] = (0, _hierarchy.CSVToHierarchy)(newData);
+        console.log("new_root", new_root);
+        console.log("new_leaves", new_leaves);
+        drawTreemap(new_root, new_leaves);
+    }
 /*
   const hierarchyGenerator = stratify()
     .id(d => d.child)
@@ -1931,6 +1943,10 @@ const populateTestFilters = (data)=>{
             updateHistogram(d.id, data);
         }
     });
+};
+const setAll = (root, leaves)=>{
+    all_root = root;
+    all_leaves = leaves;
 };
 
 },{"d3-hierarchy":"ffs4h","d3-selection":"gn9gd","./scales":"9HEWY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./shared-constants":"2wRDA","d3-scale":"UQ8g3","d3-ease":"8sCNl","d3-transition":"4lorl","./hierarchy":"k5lNf","d3-dsv":"4Jb1j"}],"gn9gd":[function(require,module,exports) {

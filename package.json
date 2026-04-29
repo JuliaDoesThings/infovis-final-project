@@ -13,5 +13,8 @@
     "d3-transition": "^3.0.1",
     "fs": "^0.0.1-security",
     "parcel-transformer-csv": "^0.0.3"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
   }
 }
