@@ -46,7 +46,7 @@ export const filters = [
 ];
 
 export const tempFilters = [
-  { id: "all", label: "All", isActive: true },
+  { id: "All", label: "All", isActive: true },
   { id: "Romance", label: "Romance", isActive: false },
   { id: "Sinitic", label: "Sinitic", isActive: false },
   { id: "Indo-Aryan", label: "Indo-Aryan", isActive: false},

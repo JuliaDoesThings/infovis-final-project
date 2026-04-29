@@ -111,14 +111,6 @@ filterButtons
             .classed("active", filter => filter.id === d.id ? true : false); 
       
         const target = svg.select(".tree-svg")
-        if (d.id == "all" || d.id == "All") 
-        {
-          console.log("attempting all");
-        }
-        else
-        {
-          console.log("d.id", d.id);
-        }
         //console.log("target", target)
         target.remove();
         
@@ -152,11 +144,12 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
     drawTreemap(new_root, new_leaves);
   }
   */
-  if (selectedFilter == "all") 
+  if (selectedFilter == "All") 
   {
     drawTreemap(all_root, all_leaves)
   }
-  else {
+  else 
+  {
     let newData = [];
 
     newData.push({
@@ -190,6 +183,8 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
     console.log("new_leaves", new_leaves);
     drawTreemap(new_root, new_leaves)
       }
+  
+  //attempting here, break it down to find error
   /*
   const hierarchyGenerator = stratify()
     .id(d => d.child)
