@@ -15,20 +15,16 @@ export const drawTreemap = (root, leaves) => {
   console.log("all_root", all_root);
   console.log("attempting draw");
 
-  // Dimensions
-  const width = 850;
-  const height = 600;
-
   // Compute the layout
   treemapLayoutGenerator(root);
   //console.log("root", root)
   //console.log("generated", treemapLayoutGenerator(root))
 
   // Append svg container
-  const svg = select("#treemap")
-    .append("svg")
-      .attr("class", "tree-svg")
-      .attr("viewBox", `0 0 ${width} ${height}`);
+  const svg = select(".tree-svg")
+    //.append("svg")
+    //  .attr("class", "tree-svg")
+    //  .attr("viewBox", `0 0 ${width} ${height}`);
 
   // Append a group for each leaf
   const nodes = svg
@@ -94,7 +90,7 @@ filterButtons
     .text(d => d.label)
 
     .on("click", (e, d) => {
-      const svg = select("#treemap") //confirmed - all selected properly
+      const svg = select(".tree-svg") //confirmed - all selected properly
       const leaves = svg.selectAll(".treemap-node")
 
       console.log("leaves", leaves);
@@ -102,6 +98,11 @@ filterButtons
       //  .attr("fill", "#6be8a5");
       console.log("DOM event", e);
       console.log("Attached datum", d);
+      if (d.id == "All") 
+      {
+        console.log("All attempt");
+        drawTreemap(all_root, all_leaves);
+      }
       if (!d.isActive) {
         filters.forEach(filter => {                                          
             filter.isActive = d.id === filter.id ? true : false;                                                   
@@ -114,7 +115,12 @@ filterButtons
         //console.log("target", target)
         target.remove();
         
+        svg
+        .selectAll(".filter")
+          .classed("active", filter => filter.id === d.id ? true : false);
+
         updateTreemap(d.id, data); 
+        
         }
         
      
@@ -200,7 +206,7 @@ const updateTreemap = (selectedFilter, data) => { //lol this doesnt match the bo
   const xScale = scaleLinear();
   const yScale = scaleLinear();
       
-
+  //struggle to adapt to treemap
   const treemapRects = selectAll("#treemap rect")
   
   treemapRects                               

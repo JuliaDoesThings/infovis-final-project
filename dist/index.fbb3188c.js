@@ -1805,15 +1805,15 @@ let all_leaves = null;
 const drawTreemap = (root, leaves)=>{
     console.log("all_root", all_root);
     console.log("attempting draw");
-    // Dimensions
-    const width = 850;
-    const height = 600;
     // Compute the layout
     (0, _sharedConstants.treemapLayoutGenerator)(root);
     //console.log("root", root)
     //console.log("generated", treemapLayoutGenerator(root))
     // Append svg container
-    const svg = (0, _d3Selection.select)("#treemap").append("svg").attr("class", "tree-svg").attr("viewBox", `0 0 ${width} ${height}`);
+    const svg = (0, _d3Selection.select)(".tree-svg");
+    //.append("svg")
+    //  .attr("class", "tree-svg")
+    //  .attr("viewBox", `0 0 ${width} ${height}`);
     // Append a group for each leaf
     const nodes = svg.selectAll(".node-container").data(leaves).join("g").attr("class", "node-container").attr("transform", (d)=>`translate(${d.x0}, ${d.y0})`);
     // Append a rectangle for each leaf 
@@ -1839,7 +1839,7 @@ const testingPopulateFilters = (data)=>{
     .paddingOuter(1)
     .round(true);
 */ filterButtons.selectAll(".filter").data(filterTemplates).join("button").attr("class", (d)=>`filter ${d.isActive ? "active" : ""}`).text((d)=>d.label).on("click", (e, d)=>{
-        const svg = (0, _d3Selection.select)("#treemap") //confirmed - all selected properly
+        const svg = (0, _d3Selection.select)(".tree-svg") //confirmed - all selected properly
         ;
         const leaves = svg.selectAll(".treemap-node");
         console.log("leaves", leaves);
@@ -1847,6 +1847,10 @@ const testingPopulateFilters = (data)=>{
         //  .attr("fill", "#6be8a5");
         console.log("DOM event", e);
         console.log("Attached datum", d);
+        if (d.id == "All") {
+            console.log("All attempt");
+            drawTreemap(all_root, all_leaves);
+        }
         if (!d.isActive) {
             (0, _sharedConstants.filters).forEach((filter)=>{
                 filter.isActive = d.id === filter.id ? true : false;
@@ -1855,6 +1859,7 @@ const testingPopulateFilters = (data)=>{
             const target = svg.select(".tree-svg");
             //console.log("target", target)
             target.remove();
+            svg.selectAll(".filter").classed("active", (filter)=>filter.id === d.id ? true : false);
             updateTreemap(d.id, data);
         }
     });
@@ -1917,7 +1922,7 @@ const updateTreemap = (selectedFilter, data)=>{
   const xScale = scaleLinear();
   const yScale = scaleLinear();
       
-
+  //struggle to adapt to treemap
   const treemapRects = selectAll("#treemap rect")
   
   treemapRects                               
@@ -5420,7 +5425,7 @@ const filters = [
         isActive: false
     },
     {
-        id: "American Indian_Alaska Native/Hawaiian",
+        id: "American Indian_Alaska Native_Hawaiian",
         label: "Native",
         isActive: false
     },
@@ -5452,7 +5457,7 @@ const tempFilters = [
         isActive: false
     },
     {
-        id: "Semiticr",
+        id: "Semitic",
         label: "Semitic",
         isActive: false
     }

@@ -41,7 +41,7 @@ export const filters = [
   { id: "all", label: "All", isActive: true },
   { id: "White", label: "White", isActive: false },
   { id: "Black", label: "Black", isActive: false },
-  { id: "American Indian_Alaska Native/Hawaiian", label: "Native", isActive: false},
+  { id: "American Indian_Alaska Native_Hawaiian", label: "Native", isActive: false},
   { id: "Asian_Pacific Islander", label: "Asian", isActive: false}
 ];
 
@@ -50,5 +50,5 @@ export const tempFilters = [
   { id: "Romance", label: "Romance", isActive: false },
   { id: "Sinitic", label: "Sinitic", isActive: false },
   { id: "Indo-Aryan", label: "Indo-Aryan", isActive: false},
-  { id: "Semiticr", label: "Semitic", isActive: false}
+  { id: "Semitic", label: "Semitic", isActive: false}
 ];
